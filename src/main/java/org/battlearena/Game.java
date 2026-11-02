@@ -13,7 +13,7 @@ public class Game {
     }
 
     public void run() {
-        // The following three lines are simple health checks and needs to be removed once we get really started.
+        // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
         Player player = new Player("Testing", new Mage());
 

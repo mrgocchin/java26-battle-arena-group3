@@ -11,7 +11,7 @@ public class Player {
     private int hp;
     private Character playerCharacter;
 
-    private Map<String, Effect> effect = new HashMap<>();
+    private Map<String, Effect> effects = new HashMap<>();
 
     public Player(String name, Character playerCharacter) {
         this.name = name;
