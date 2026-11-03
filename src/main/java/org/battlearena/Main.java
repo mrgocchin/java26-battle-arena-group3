@@ -1,7 +1,12 @@
-import org.battlearena.Game;
+package org.battlearena;
 
-void main() {
-    Scanner scanner = new Scanner(System.in);
+import java.util.Scanner;
 
-    new Game(scanner).run();
+public class Main{
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        new Game(scanner).run();
+    }
+
 }
