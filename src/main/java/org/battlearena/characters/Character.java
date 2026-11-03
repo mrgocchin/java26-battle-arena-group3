@@ -1,4 +1,4 @@
-package org.battlearena.characters.entities;
+package org.battlearena.characters;
 
 public abstract class Character {
     protected int hp;

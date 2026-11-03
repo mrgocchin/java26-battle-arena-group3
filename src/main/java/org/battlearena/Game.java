@@ -1,6 +1,6 @@
 package org.battlearena;
 
-import org.battlearena.characters.entities.Mage;
+import org.battlearena.characters.mage.Mage;
 import org.battlearena.player.Player;
 
 import java.util.Scanner;

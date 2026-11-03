@@ -1,7 +1,7 @@
 package org.battlearena.player;
 
 import org.battlearena.actions.Effect;
-import org.battlearena.characters.entities.Character;
+import org.battlearena.characters.Character;
 
 import java.util.HashMap;
 import java.util.Map;

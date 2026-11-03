@@ -1,4 +1,6 @@
-package org.battlearena.characters.entities;
+package org.battlearena.characters.necromancer;
+
+import org.battlearena.characters.Character;
 
 public class Necromancer extends Character {
 
