@@ -5,6 +5,7 @@ import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
 import org.battlearena.player.Player;
+import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,6 +30,9 @@ public class Game {
         // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
 
+
+        // playTurn();
+
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
@@ -50,7 +54,7 @@ public class Game {
                         selectedCharacter = c;
                         System.out.print("The computer got the character: " + selectedCharacter.getClass().getSimpleName());
                         break;
-                    }   
+                    }
                 }
             }
             if(selectedCharacter == null){
@@ -77,7 +81,7 @@ public class Game {
         Random random = new Random();
         int randomNumber = random.nextInt(3);
         if(randomNumber == 0) {
-            return new Warrior();   
+            return new Warrior();
         }if(randomNumber == 1) {
             return new Mage();
         } else {
@@ -85,4 +89,19 @@ public class Game {
         }
     }
 
+    public void playTurn() {
+        Player player = new Player("Testing", new Mage());
+        Turn turn = new Turn(player);
+
+        // Action 1
+        // Prompt for action (including attack)
+        // After action completed, call turn.increaseActionCount()
+
+        // Action 2
+        if (turn.hasAttackedThisTurn()) {
+            // Prompt for action (excluding attack)
+            // After action completed, call turn.increaseActionCount()
+        }
+        // else force player to attack, they're not getting any other option
+    }
 }
