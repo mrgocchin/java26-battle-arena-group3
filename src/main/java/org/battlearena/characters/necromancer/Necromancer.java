@@ -7,6 +7,26 @@ public class Necromancer extends Character {
     protected final int hp = 7777;
 
     public Necromancer() {
-        super.hp = this.hp;
+
+    }
+
+    @Override
+    public int getMinAttackDamage() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxAttackDamage() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxHp() {
+        return 0;
+    }
+
+    @Override
+    public int getMinHP() {
+        return 0;
     }
 }
