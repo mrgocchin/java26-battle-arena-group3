@@ -3,10 +3,15 @@ package org.battlearena.characters.mage;
 import org.battlearena.actions.specialskill.SpecialSkillEnum;
 import org.battlearena.characters.Character;
 
-public class Mage extends Character {
-    protected final int hp = 8888;
+import java.util.ArrayList;
+import java.util.EnumSet;
 
-    public Mage() {
-        super.hp = this.hp;
+public class Mage extends Character {
+    public Mage() { super("Mage",
+            MageStats.MAX_HP.getValue(),
+            MageStats.MIN_HP.getValue(),
+            MageStats.MIN_ATTACK_DAMAGE.getValue(),
+            MageStats.MAX_ATTACK_DAMAGE.getValue(),
+            EnumSet.of(SpecialSkillEnum.WARD, SpecialSkillEnum.STABILITY));
     }
 }

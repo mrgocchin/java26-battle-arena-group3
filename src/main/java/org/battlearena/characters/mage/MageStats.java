@@ -1,9 +1,12 @@
 package org.battlearena.characters.mage;
 
 public enum MageStats {
-    HP(100),
+    MAX_HP(100),
+    MIN_HP(0),
     MIN_ATTACK_DAMAGE(3),
     MAX_ATTACK_DAMAGE(12);
+    //moved special skills to a different enum with all special skills.
+
 
     public final int value;
 
