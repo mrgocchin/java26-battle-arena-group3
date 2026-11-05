@@ -16,10 +16,14 @@ public class Player {
     public Player(String name, Character playerCharacter) {
         this.name = name;
         this.playerCharacter = playerCharacter;
-        this.hp = playerCharacter.getHP();
+        this.hp = playerCharacter.getMaxHp();
     }
 
     public int getHP() {
         return this.hp;
+    }
+
+    public Character getPlayerCharacter(){
+        return this.playerCharacter;
     }
 }

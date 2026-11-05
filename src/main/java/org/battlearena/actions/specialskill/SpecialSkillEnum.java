@@ -1,8 +1,9 @@
 package org.battlearena.actions.specialskill;
 
-import org.battlearena.actions.Actionable;
 
-public enum SpecialSkillEnum {WARD("Great ward", 10),
+
+public enum SpecialSkillEnum {
+    WARD("Great ward", 10),
     STABILITY("Stability", 0),
     ADRENALINE("Adrenaline rush", 10),
     SHIELD_BASH("Shield bash", 5),

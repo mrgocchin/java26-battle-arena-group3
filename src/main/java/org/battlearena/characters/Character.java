@@ -1,6 +1,6 @@
 package org.battlearena.characters;
 
-import org.battlearena.actions.specialskill.SpecialSkill;
+
 import org.battlearena.actions.specialskill.SpecialSkillEnum;
 
 import java.util.EnumSet;
