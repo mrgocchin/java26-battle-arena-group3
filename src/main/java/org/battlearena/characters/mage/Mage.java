@@ -3,7 +3,7 @@ package org.battlearena.characters.mage;
 import org.battlearena.actions.specialskill.SpecialSkillEnum;
 import org.battlearena.characters.Character;
 
-import java.util.ArrayList;
+
 import java.util.EnumSet;
 
 public class Mage extends Character {

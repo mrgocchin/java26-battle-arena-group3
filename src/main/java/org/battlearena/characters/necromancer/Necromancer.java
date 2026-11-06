@@ -2,7 +2,7 @@ package org.battlearena.characters.necromancer;
 
 import org.battlearena.actions.specialskill.SpecialSkillEnum;
 import org.battlearena.characters.Character;
-import org.battlearena.characters.mage.MageStats;
+
 
 import java.util.EnumSet;
 
