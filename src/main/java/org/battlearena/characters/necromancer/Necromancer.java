@@ -14,6 +14,8 @@ public class Necromancer extends Character {
                 NecromancerStats.MIN_HP.getValue(),
                 NecromancerStats.MIN_ATTACK_DAMAGE.getValue(),
                 NecromancerStats.MAX_ATTACK_DAMAGE.getValue(),
+                NecromancerStats.MIN_DEFEND.getValue(),
+                NecromancerStats.MAX_DEFEND.getValue(),
                 EnumSet.of(SpecialSkillEnum.DRAIN, SpecialSkillEnum.CURSE));
     }
 }

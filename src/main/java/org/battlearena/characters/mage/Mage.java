@@ -12,6 +12,8 @@ public class Mage extends Character {
             MageStats.MIN_HP.getValue(),
             MageStats.MIN_ATTACK_DAMAGE.getValue(),
             MageStats.MAX_ATTACK_DAMAGE.getValue(),
+            MageStats.MIN_DEFEND.getValue(),
+            MageStats.MAX_DEFEND.getValue(),
             EnumSet.of(SpecialSkillEnum.WARD, SpecialSkillEnum.STABILITY));
     }
 }
