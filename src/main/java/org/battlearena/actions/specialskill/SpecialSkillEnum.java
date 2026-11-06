@@ -26,3 +26,5 @@ SpecialSkillEnum(String name, int value){
         return value;
     }
 }
+
+

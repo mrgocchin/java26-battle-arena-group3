@@ -19,4 +19,5 @@ public enum WarriorStats {
     public int getValue() {
         return this.value;
     }
+
 }

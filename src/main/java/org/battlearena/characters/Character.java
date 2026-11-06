@@ -11,7 +11,6 @@ public abstract class Character {
     protected String name;
     protected int maxHp;
     protected int minHp;
-    protected int Hp;
     protected int minAttackDamage;
     protected int maxAttackDamage;
     protected int minDefend;
@@ -32,8 +31,7 @@ public abstract class Character {
         this.maxDefend = maxDefend;
         this.specialSkills = specialSkills;
         this.random = new Random();
-    }
-
+   
     public String getName() {
         return name;
     }
@@ -67,7 +65,9 @@ public abstract class Character {
     public int getMinHp() {
         return minHp;
     }
-
+//  getHP, setHp  maybe to be moved to player class
+// so player class is responsible to handle current game stats.
+      
     public int getHp() {
         return Hp;
     }
@@ -80,7 +80,7 @@ public abstract class Character {
         } else {
             this.Hp = Hp;
         }
-    
+    // getDamage, getDefend, to be moved to attack and defend classes.
     public int getDamage() {
         int damage = random.nextInt(getMinAttackDamage(),getMaxAttackDamage()+1);
         return damage;
@@ -90,20 +90,17 @@ public abstract class Character {
         int defend = random.nextInt(getMinDefend(),getMaxDefend()+1);
         return defend;
     }
-
+//isAlive to be moved to player class
      public boolean isAlive(){
         return Hp > 0;
      }
 
+    
     //get special skills needs some extra thinking depending on how we'll use it.
    // public EnumSet<SpecialSkillEnum> getSpecialSkills() { return specialSkills;}
 
-}
-// commenting out getHP maybe to be moved to player class
-// so player class is responsible to handle current game stats.
-    /*
-    public int getHP() {
-        return this.hp;
-    }
 
-     */
+
+}
+
+   
