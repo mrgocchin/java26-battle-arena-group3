@@ -26,4 +26,8 @@ public class Player {
     public Character getPlayerCharacter(){
         return this.playerCharacter;
     }
+
+    public Map<String, Effect> getEffects() {
+        return effects;
+    }
 }

@@ -104,4 +104,19 @@ public class Game {
         }
         // else force player to attack, they're not getting any other option
     }
+
+    public void playAction(Player player, Player opponent) {
+        /* Turn 1, Action 1: Player 1 has selected ATTACK.
+            Player 1 attacks.
+            We check for effects (player.getEffects())
+            There are no effects.
+            We calculate damage. (we calculate damage after, because we'd take effects into account)
+            We check for countering effects on opponent. (opponent.getEffects())
+            There are no such effects.
+            Opponent's HP is decreased by the damage.
+            (the action has ended, and any other checks such as HP status etc is outside the action scope)
+         */
+        player.getEffects();
+
+    }
 }
