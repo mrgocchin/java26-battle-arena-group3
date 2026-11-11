@@ -11,7 +11,6 @@ public enum SpecialEffect {
     CURSED(WARD), // from curse
     EXTRA_ATTACK_POWER(null); // from adrenaline
 
-
     private SpecialEffect counterEffect;
 
     SpecialEffect(SpecialEffect counterEffect) {

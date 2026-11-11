@@ -1,5 +1,8 @@
 package org.battlearena;
 
+import org.battlearena.actions.Actionable;
+import org.battlearena.actions.attack.Attack;
+import org.battlearena.actions.effects.Effect;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
@@ -8,6 +11,7 @@ import org.battlearena.player.Player;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -91,10 +95,12 @@ public class Game {
 
     public void playTurn() {
         Player player = new Player("Testing", new Mage());
+        Player opponent = new Player("Computer", new Warrior());
         Turn turn = new Turn(player);
 
         // Action 1
         // Prompt for action (including attack)
+        playAction(player, opponent, new Attack());
         // After action completed, call turn.increaseActionCount()
 
         // Action 2
@@ -105,7 +111,7 @@ public class Game {
         // else force player to attack, they're not getting any other option
     }
 
-    public void playAction(Player player, Player opponent) {
+    public void playAction(Player player, Player opponent, Actionable action) {
         /* Turn 1, Action 1: Player 1 has selected ATTACK.
             Player 1 attacks.
             We check for effects (player.getEffects())
@@ -116,7 +122,21 @@ public class Game {
             Opponent's HP is decreased by the damage.
             (the action has ended, and any other checks such as HP status etc is outside the action scope)
          */
-        player.getEffects();
 
+        // --- ATTACK SEQUENCE START ---
+        Map<String, Effect> playerEffects = player.getEffects();
+        Map<String, Effect> opponentEffects = opponent.getEffects();
+
+        // int damage = calculateDamage(playerEffects, opponentEffects); // in which effects are taken into account when damage is calculated
+        // int modifierValue = action.calculate();
+        // player.attacks(opponent, damage); // in which opponent HP is decreased or unchanged
+        // action.perform(player, opponent, 5); // HARDCODED PLACEHOLDER, use modifierValue or something instead
+
+        // --- ATTACK SEQUENCE ENDS ---
+
+
+        // --- HEALING SEQUENCE STARTS ---
+        // int healing = player.getMaxHp * 0.1
+        // applyHealing (healing)
     }
 }

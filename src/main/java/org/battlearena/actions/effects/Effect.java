@@ -51,23 +51,16 @@ public class Effect {
         this.effect = effect;
     }
 
-    /* public SpecialEffect getCounteringEffect() {
-         switch (this.effect) {
-            case EffectEnum.KNOCKDOWN:
-                return EffectEnum.STABILITY;
-            case CURSED:
-                return EffectEnum.WARD;
-            default:
-                return null;
-        }
-    } */
-
-    public boolean isBlocking() {
-        return effect == SpecialEffect.BLOCKING;
+    public SpecialEffect getEffect() {
+        return effect;
     }
 
-    public boolean isExtraAttackPower() {
+    public boolean hasExtraAttackPower() {
         return effect == SpecialEffect.EXTRA_ATTACK_POWER;
+    }
+
+    public boolean isCountered() {
+        return true; // NOTE - PLACEHOLDER
     }
 
 }
