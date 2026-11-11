@@ -92,7 +92,7 @@ public abstract class Character {
             int defend = random.nextInt(getMinDefend(), getMaxDefend() + 1);
             return defend;
         }
-//isAlive to be moved to player class
+//IsAlive to be moved to player class
         public boolean isAlive () {
             return hp > 0;
         }
