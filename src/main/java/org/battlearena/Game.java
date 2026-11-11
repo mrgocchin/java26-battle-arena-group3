@@ -5,6 +5,7 @@ import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
 import org.battlearena.player.Player;
+import org.battlearena.player.WinningStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Game {
         this.players = new ArrayList<>();
     }
 
-    public void addPlayer(Player player){
+    public void addPlayer(Player player) {
         players.add(player);
     }
 
@@ -39,17 +40,17 @@ public class Game {
         Character Warrior = new Warrior();
         Character Mage = new Mage();
         Character Necromancer = new Necromancer();
-        ArrayList <Character> availableCharacters = new ArrayList<>();
+        ArrayList<Character> availableCharacters = new ArrayList<>();
         availableCharacters.add(Warrior);
         availableCharacters.add(Mage);
         availableCharacters.add(Necromancer);
         Character selectedCharacter = null;
-        while(selectedCharacter == null){
+        while (selectedCharacter == null) {
             System.out.print("Your choice of character? (Warrior/ Mage / Necromancer): ");
-            if(scanner.hasNextLine()){
+            if (scanner.hasNextLine()) {
                 String chosenCharacter = scanner.nextLine();
-                for(Character c : availableCharacters){
-                    if(chosenCharacter.trim().equalsIgnoreCase(c.getClass().getSimpleName())){
+                for (Character c : availableCharacters) {
+                    if (chosenCharacter.trim().equalsIgnoreCase(c.getClass().getSimpleName())) {
                         System.out.println("You have chosen the character " + c.getClass().getSimpleName() + " and your name is: " + name);
                         selectedCharacter = c;
                         System.out.print("The computer got the character: " + selectedCharacter.getClass().getSimpleName());
@@ -57,10 +58,10 @@ public class Game {
                     }
                 }
             }
-            if(selectedCharacter == null){
+            if (selectedCharacter == null) {
                 System.out.println("You have to type in a valid character, do you want to quit? (Y/N)");
                 String response = scanner.nextLine();
-                if(response.trim().equalsIgnoreCase("Y")){
+                if (response.trim().equalsIgnoreCase("Y")) {
                     break;
                 }
             }
@@ -73,16 +74,17 @@ public class Game {
         }
     }
 
-    private Player getComputerPlayer(){
+    private Player getComputerPlayer() {
         return new Player("Computer player", getComputerPlayerCharacter());
     }
 
-    private Character getComputerPlayerCharacter(){
+    private Character getComputerPlayerCharacter() {
         Random random = new Random();
         int randomNumber = random.nextInt(3);
-        if(randomNumber == 0) {
+        if (randomNumber == 0) {
             return new Warrior();
-        }if(randomNumber == 1) {
+        }
+        if (randomNumber == 1) {
             return new Mage();
         } else {
             return new Necromancer();
@@ -103,5 +105,25 @@ public class Game {
             // After action completed, call turn.increaseActionCount()
         }
         // else force player to attack, they're not getting any other option
+    }
+
+    public void winningStatusCheck(ArrayList<Player> players) {
+        for (Player player : players) {
+            if (player.getHP() <= 0) {
+                player.setWinningStatus(WinningStatus.LOSER);
+                System.out.println(player.gameOverMessage());
+            }
+        }
+        for (Player player : players) {
+            if (player.getWinningStatus() != WinningStatus.LOSER) {
+                player.setWinningStatus(WinningStatus.WINNER);
+                System.out.println(player.winnerMessage());
+            }
+
+        }
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }
