@@ -8,8 +8,11 @@ import org.battlearena.player.Player;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
+
 
 public class Game {
 
@@ -29,9 +32,6 @@ public class Game {
     public void run() {
         // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
-
-
-        // playTurn();
 
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -71,6 +71,7 @@ public class Game {
             addPlayer(humanPlayer);
             addPlayer(computerPlayer);
         }
+        Collections.shuffle(players); // slumpmässig ordning för listan players
     }
 
     private Player getComputerPlayer(){
@@ -88,11 +89,7 @@ public class Game {
             return new Necromancer();
         }
     }
-
-    public void playTurn() {
-        Player player = new Player("Testing", new Mage());
-        Turn turn = new Turn(player);
-
+    public void TurnActions(Turn turn){
         // Action 1
         // Prompt for action (including attack)
         // After action completed, call turn.increaseActionCount()
@@ -103,5 +100,12 @@ public class Game {
             // After action completed, call turn.increaseActionCount()
         }
         // else force player to attack, they're not getting any other option
+    }
+
+    public void playTurn() {
+        for(Player p : players) { // för p i players
+            Turn turn = new Turn(p); // varje player p utför sin tur.
+            TurnActions(turn);     // Anropa metoden playturnaction för att spela sin tur.
+        }
     }
 }
