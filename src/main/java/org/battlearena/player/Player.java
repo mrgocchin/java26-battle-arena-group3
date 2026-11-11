@@ -10,6 +10,7 @@ public class Player {
     private String name;
     private int hp;
     private Character playerCharacter;
+    private boolean defending = false;
 
     private Map<String, Effect> effects = new HashMap<>();
 
@@ -25,5 +26,17 @@ public class Player {
 
     public Character getPlayerCharacter(){
         return this.playerCharacter;
+    }
+
+    public void setDefending() {
+        this.defending = true;
+    }
+
+    public void setNotDefending() {
+        this.defending = false;
+    }
+
+    public boolean isDefending() {
+        return this.defending;
     }
 }

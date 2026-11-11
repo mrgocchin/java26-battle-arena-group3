@@ -9,6 +9,11 @@ import java.util.Random;
 public class Attack implements Actionable {
     private final Random random = new Random();
 
+    @Override
+    public void perform() {
+        // TODO
+    }
+
     public int calculateDamage(Player attacker) {
         Character playerCharacter = attacker.getPlayerCharacter();
 
