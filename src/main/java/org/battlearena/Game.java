@@ -5,7 +5,7 @@ import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
 import org.battlearena.player.Player;
-import org.battlearena.player.WinningStatus;
+import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
@@ -107,21 +107,53 @@ public class Game {
         // else force player to attack, they're not getting any other option
     }
 
-    public void winningStatusCheck(ArrayList<Player> players) {
+    public boolean alivePlayersCheck() {
+        boolean arePlayersAlive = true;
         for (Player player : players) {
             if (player.getHP() <= 0) {
-                player.setWinningStatus(WinningStatus.LOSER);
-                System.out.println(player.gameOverMessage());
-            }
-        }
-        for (Player player : players) {
-            if (player.getWinningStatus() != WinningStatus.LOSER) {
-                player.setWinningStatus(WinningStatus.WINNER);
-                System.out.println(player.winnerMessage());
+                arePlayersAlive = false;
+                //unsure about break here.
+                //can both player die in the same turn?
+                break;
             }
 
         }
+        return arePlayersAlive;
     }
+
+    public void assignWinner() {
+        for (Player player : players) {
+            if (player.getHP() <= 0) {
+                player.setWinningStatus(PlayerStatus.LOSER);
+                System.out.println(player.gameOverMessage());
+
+            }
+        }
+        for (Player player : players) {
+            if (player.getWinningStatus() != PlayerStatus.LOSER) {
+                player.setWinningStatus(PlayerStatus.WINNER);
+                System.out.println(player.winnerMessage());
+            }
+        }
+
+
+    }
+
+    public String displayPlayerStatusInfo(Player player) {
+        StringBuilder playerStatusInfo = new StringBuilder();
+
+        playerStatusInfo.append("The ")
+                .append(player.getPlayerCharacter().getClass().getSimpleName())
+                .append(" played by ")
+                .append(player.getName())
+                .append(" has ")
+                .append(player.getHP())
+                //.append(" HP remaining and has the following effects: ")
+                .append("\n");
+
+        return playerStatusInfo.toString();
+    }
+
 
     public ArrayList<Player> getPlayers() {
         return players;

@@ -1,7 +1,7 @@
 package org.battlearena.player;
 
-public enum WinningStatus {
+public enum PlayerStatus {
     WINNER,
     LOSER,
-    STILL_PLAYING
+    PLAYING
 }

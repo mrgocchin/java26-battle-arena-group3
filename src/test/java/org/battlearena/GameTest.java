@@ -2,7 +2,7 @@ package org.battlearena;
 
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.player.Player;
-import org.battlearena.player.WinningStatus;
+import org.battlearena.player.PlayerStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     Scanner scanner;
@@ -37,14 +37,37 @@ class GameTest {
     }
 
     @Test
-    void winnerCheckShouldReturnCorrectEnum() {
-        ArrayList<Player> players = game.getPlayers();
-        players.getFirst().setHp(0);
-        game.winningStatusCheck(game.getPlayers());
-        assertEquals(WinningStatus.LOSER, players.getFirst().getWinningStatus());
+    void alivePlayersCheckShouldReturnFalseAPlayerDies() {
+        game.getPlayers().getFirst().setHp(0);
+        game.alivePlayersCheck();
+        assertFalse(game.alivePlayersCheck());
+
+    }
 
 
 
+    @Test
+    void assignWinnerCheckShouldReturnRightEnum() {
 
+        game.getPlayers().getFirst().setHp(0);
+        game.assignWinner();
+        assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getWinningStatus());
+
+
+    }
+
+    @Test
+    void displayPlayerStatusInfoShouldReturnRightString(){
+        Player player = game.getPlayers().getFirst();
+        player.setHp(50);
+        String expectedOutput = "The " +
+                player.getPlayerCharacter().getClass().getSimpleName() +
+                " played by " +
+                player.getName() +
+                " has " +
+                player.getHP() + "\n";
+                //" HP remaining and has the following effects: "
+
+        assertEquals(expectedOutput, game.displayPlayerStatusInfo(player));
     }
 }

@@ -10,7 +10,7 @@ public class Player {
     private String name;
     private int hp;
     private Character playerCharacter;
-    private WinningStatus winningStatus = WinningStatus.STILL_PLAYING;
+    private PlayerStatus playerStatus = PlayerStatus.PLAYING;
 
     private Map<String, Effect> effects = new HashMap<>();
 
@@ -28,12 +28,12 @@ public class Player {
         this.hp = hp;
     }
 
-    public WinningStatus getWinningStatus() {
-        return winningStatus;
+    public PlayerStatus getWinningStatus() {
+        return playerStatus;
     }
 
-    public void setWinningStatus(WinningStatus winningStatus) {
-        this.winningStatus = winningStatus;
+    public void setWinningStatus(PlayerStatus playerStatus) {
+        this.playerStatus = playerStatus;
     }
 
     public String winnerMessage() {
@@ -45,5 +45,9 @@ public class Player {
 
     public Character getPlayerCharacter(){
         return this.playerCharacter;
+    }
+
+    public String getName() {
+        return name;
     }
 }
