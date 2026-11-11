@@ -40,7 +40,7 @@ public class Game {
         Character Warrior = new Warrior();
         Character Mage = new Mage();
         Character Necromancer = new Necromancer();
-        ArrayList<Character> availableCharacters = new ArrayList<>();
+        ArrayList <Character> availableCharacters = new ArrayList<>();
         availableCharacters.add(Warrior);
         availableCharacters.add(Mage);
         availableCharacters.add(Necromancer);
