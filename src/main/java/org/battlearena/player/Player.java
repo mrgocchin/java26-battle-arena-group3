@@ -12,6 +12,7 @@ public class Player {
     private Character playerCharacter;
     private boolean defending = false;
     private PlayerStatus playerStatus = PlayerStatus.PLAYING;
+    private boolean isHumanPlayer = false;
     //playerStatus enum instead of isAlive, so only one status at the time is possible.
 
     private Map<String, Effect> effects = new HashMap<>();
@@ -36,6 +37,14 @@ public class Player {
 
     public void setPlayerStatus(PlayerStatus playerStatus) {
         this.playerStatus = playerStatus;
+    }
+
+    public boolean isHumanPlayer() {
+        return isHumanPlayer;
+    }
+
+    public void setIsHuman() {
+        isHumanPlayer = true;
     }
 
     public String winnerMessage() {
