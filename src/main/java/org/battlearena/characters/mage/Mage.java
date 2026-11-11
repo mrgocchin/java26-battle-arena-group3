@@ -17,3 +17,4 @@ public class Mage extends Character {
             EnumSet.of(SpecialSkillEnum.WARD, SpecialSkillEnum.STABILITY));
     }
 }
+// refactoring later to better use enum
