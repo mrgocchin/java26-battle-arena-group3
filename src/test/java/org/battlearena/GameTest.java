@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +50,7 @@ class GameTest {
 
         game.getPlayers().getFirst().setHp(0);
         game.assignWinner();
-        assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getWinningStatus());
+        assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getPlayerStatus());
 
 
     }

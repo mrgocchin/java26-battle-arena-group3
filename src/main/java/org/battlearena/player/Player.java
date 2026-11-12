@@ -29,11 +29,11 @@ public class Player {
         this.hp = hp;
     }
 
-    public PlayerStatus getWinningStatus() {
+    public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
 
-    public void setWinningStatus(PlayerStatus playerStatus) {
+    public void setPlayerStatus(PlayerStatus playerStatus) {
         this.playerStatus = playerStatus;
     }
 

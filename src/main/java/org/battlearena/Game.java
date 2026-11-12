@@ -120,21 +120,26 @@ public class Game {
         }
         return arePlayersAlive;
     }
-
-    public void assignWinner() {
+//this method should only assign winner but for now it also returns messages.
+// can be refactored to 2 different methods.
+    public String assignWinner() {
+        StringBuilder endGameMessage = new StringBuilder();
         for (Player player : players) {
             if (player.getHP() <= 0) {
-                player.setWinningStatus(PlayerStatus.LOSER);
-                System.out.println(player.gameOverMessage());
+                player.setPlayerStatus(PlayerStatus.LOSER);
+                endGameMessage.append(player.gameOverMessage());
 
             }
         }
+        endGameMessage.append("\n");
         for (Player player : players) {
-            if (player.getWinningStatus() != PlayerStatus.LOSER) {
-                player.setWinningStatus(PlayerStatus.WINNER);
-                System.out.println(player.winnerMessage());
+            if (player.getPlayerStatus() != PlayerStatus.LOSER) {
+                player.setPlayerStatus(PlayerStatus.WINNER);
+                endGameMessage.append(player.winnerMessage());
             }
         }
+        return endGameMessage.toString();
+
 
 
     }
