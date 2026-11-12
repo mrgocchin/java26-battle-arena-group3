@@ -11,6 +11,7 @@ public class Player {
     private int hp;
     private Character playerCharacter;
     private PlayerStatus playerStatus = PlayerStatus.PLAYING;
+    //playerStatus enum instead of isAlive, so only one status at the time is possible.
 
     private Map<String, Effect> effects = new HashMap<>();
 

@@ -106,7 +106,7 @@ public class Game {
         }
         // else force player to attack, they're not getting any other option
     }
-
+//maybe methods to be moved to a different class, like gameService?
     public boolean alivePlayersCheck() {
         boolean arePlayersAlive = true;
         for (Player player : players) {
