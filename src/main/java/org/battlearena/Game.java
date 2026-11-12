@@ -9,8 +9,11 @@ import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
+
 
 public class Game {
 
@@ -40,7 +43,7 @@ public class Game {
         Character Warrior = new Warrior();
         Character Mage = new Mage();
         Character Necromancer = new Necromancer();
-        ArrayList <Character> availableCharacters = new ArrayList<>();
+        ArrayList<Character> availableCharacters = new ArrayList<>();
         availableCharacters.add(Warrior);
         availableCharacters.add(Mage);
         availableCharacters.add(Necromancer);
@@ -72,6 +75,7 @@ public class Game {
             addPlayer(humanPlayer);
             addPlayer(computerPlayer);
         }
+        Collections.shuffle(players); // slumpmässig ordning för listan players
     }
 
     private Player getComputerPlayer() {
@@ -91,10 +95,7 @@ public class Game {
         }
     }
 
-    public void playTurn() {
-        Player player = new Player("Testing", new Mage());
-        Turn turn = new Turn(player);
-
+    public void TurnActions(Turn turn) {
         // Action 1
         // Prompt for action (including attack)
         // After action completed, call turn.increaseActionCount()
@@ -106,7 +107,15 @@ public class Game {
         }
         // else force player to attack, they're not getting any other option
     }
-//maybe methods to be moved to a different class, like gameService?
+
+    public void playTurn() {
+        for (Player p : players) { // för p i players
+            Turn turn = new Turn(p); // varje player p utför sin tur.
+            TurnActions(turn);     // Anropa metoden playturnaction för att spela sin tur.
+        }
+    }
+
+    //maybe methods to be moved to a different class, like gameService?
     public boolean alivePlayersCheck() {
         boolean arePlayersAlive = true;
         for (Player player : players) {
@@ -120,7 +129,8 @@ public class Game {
         }
         return arePlayersAlive;
     }
-//this method should only assign winner but for now it also returns messages.
+
+    //this method should only assign winner but for now it also returns messages.
 // can be refactored to 2 different methods.
     public String assignWinner() {
         StringBuilder endGameMessage = new StringBuilder();
@@ -139,10 +149,8 @@ public class Game {
             }
         }
         return endGameMessage.toString();
-
-
-
     }
+
 
     public String displayPlayerStatusInfo(Player player) {
         StringBuilder playerStatusInfo = new StringBuilder();
