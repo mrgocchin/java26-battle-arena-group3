@@ -11,6 +11,8 @@ public class Player {
     private int hp;
     private Character playerCharacter;
     private boolean defending = false;
+    private PlayerStatus playerStatus = PlayerStatus.PLAYING;
+    //playerStatus enum instead of isAlive, so only one status at the time is possible.
 
     private Map<String, Effect> effects = new HashMap<>();
 
@@ -22,6 +24,25 @@ public class Player {
 
     public int getHP() {
         return this.hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public PlayerStatus getPlayerStatus() {
+        return playerStatus;
+    }
+
+    public void setPlayerStatus(PlayerStatus playerStatus) {
+        this.playerStatus = playerStatus;
+    }
+
+    public String winnerMessage() {
+        return "Congratulations! " + this.name + " has won the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " survived the battle!";
+    }
+    public String gameOverMessage() {
+        return "Game Over! " + this.name + " has lost the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " did not survive the battle!";
     }
 
     public Character getPlayerCharacter(){
@@ -38,5 +59,9 @@ public class Player {
 
     public boolean isDefending() {
         return this.defending;
+    }
+
+    public String getName() {
+        return name;
     }
 }

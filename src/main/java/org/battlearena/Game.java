@@ -5,6 +5,7 @@ import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
 import org.battlearena.player.Player;
+import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Game {
         this.players = new ArrayList<>();
     }
 
-    public void addPlayer(Player player){
+    public void addPlayer(Player player) {
         players.add(player);
     }
 
@@ -44,12 +45,12 @@ public class Game {
         availableCharacters.add(Mage);
         availableCharacters.add(Necromancer);
         Character selectedCharacter = null;
-        while(selectedCharacter == null){
+        while (selectedCharacter == null) {
             System.out.print("Your choice of character? (Warrior/ Mage / Necromancer): ");
-            if(scanner.hasNextLine()){
+            if (scanner.hasNextLine()) {
                 String chosenCharacter = scanner.nextLine();
-                for(Character c : availableCharacters){
-                    if(chosenCharacter.trim().equalsIgnoreCase(c.getClass().getSimpleName())){
+                for (Character c : availableCharacters) {
+                    if (chosenCharacter.trim().equalsIgnoreCase(c.getClass().getSimpleName())) {
                         System.out.println("You have chosen the character " + c.getClass().getSimpleName() + " and your name is: " + name);
                         selectedCharacter = c;
                         System.out.print("The computer got the character: " + selectedCharacter.getClass().getSimpleName());
@@ -57,10 +58,10 @@ public class Game {
                     }
                 }
             }
-            if(selectedCharacter == null){
+            if (selectedCharacter == null) {
                 System.out.println("You have to type in a valid character, do you want to quit? (Y/N)");
                 String response = scanner.nextLine();
-                if(response.trim().equalsIgnoreCase("Y")){
+                if (response.trim().equalsIgnoreCase("Y")) {
                     break;
                 }
             }
@@ -73,16 +74,17 @@ public class Game {
         }
     }
 
-    private Player getComputerPlayer(){
+    private Player getComputerPlayer() {
         return new Player("Computer player", getComputerPlayerCharacter());
     }
 
-    private Character getComputerPlayerCharacter(){
+    private Character getComputerPlayerCharacter() {
         Random random = new Random();
         int randomNumber = random.nextInt(3);
-        if(randomNumber == 0) {
+        if (randomNumber == 0) {
             return new Warrior();
-        }if(randomNumber == 1) {
+        }
+        if (randomNumber == 1) {
             return new Mage();
         } else {
             return new Necromancer();
@@ -103,5 +105,62 @@ public class Game {
             // After action completed, call turn.increaseActionCount()
         }
         // else force player to attack, they're not getting any other option
+    }
+//maybe methods to be moved to a different class, like gameService?
+    public boolean alivePlayersCheck() {
+        boolean arePlayersAlive = true;
+        for (Player player : players) {
+            if (player.getHP() <= 0) {
+                arePlayersAlive = false;
+                //unsure about break here.
+                //can both player die in the same turn?
+                break;
+            }
+
+        }
+        return arePlayersAlive;
+    }
+//this method should only assign winner but for now it also returns messages.
+// can be refactored to 2 different methods.
+    public String assignWinner() {
+        StringBuilder endGameMessage = new StringBuilder();
+        for (Player player : players) {
+            if (player.getHP() <= 0) {
+                player.setPlayerStatus(PlayerStatus.LOSER);
+                endGameMessage.append(player.gameOverMessage());
+
+            }
+        }
+        endGameMessage.append("\n");
+        for (Player player : players) {
+            if (player.getPlayerStatus() != PlayerStatus.LOSER) {
+                player.setPlayerStatus(PlayerStatus.WINNER);
+                endGameMessage.append(player.winnerMessage());
+            }
+        }
+        return endGameMessage.toString();
+
+
+
+    }
+
+    public String displayPlayerStatusInfo(Player player) {
+        StringBuilder playerStatusInfo = new StringBuilder();
+
+        playerStatusInfo.append("The ")
+                .append(player.getPlayerCharacter().getClass().getSimpleName())
+                .append(" played by ")
+                .append(player.getName())
+                .append(" has ")
+                .append(player.getHP())
+                //.append(" HP remaining and has the following effects: ")
+                .append("\n");
+
+        return playerStatusInfo.toString();
+    }
+
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }
