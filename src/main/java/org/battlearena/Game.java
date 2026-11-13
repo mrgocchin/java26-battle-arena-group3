@@ -66,14 +66,13 @@ public class Game {
                 promptQuitGame();
             }
         }
-        if (selectedCharacter != null) {
-            Player humanPlayer = new Player(name, selectedCharacter);
-            Player computerPlayer = getComputerPlayer();
-            addPlayer(humanPlayer);
-            addPlayer(computerPlayer);
-            // playTurn(humanPlayer, computerPlayer);
-        }
+
+        Player humanPlayer = new Player(name, selectedCharacter);
         humanPlayer.setIsHuman();
+        Player computerPlayer = getComputerPlayer();
+        addPlayer(humanPlayer);
+        addPlayer(computerPlayer);
+
         Collections.shuffle(players); // slumpmässig ordning för listan players
         playTurn(humanPlayer, computerPlayer);
     }
