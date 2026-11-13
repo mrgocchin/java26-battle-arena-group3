@@ -1,15 +1,18 @@
 package org.battlearena;
 
+import org.battlearena.actions.Actionable;
+import org.battlearena.actions.attack.Attack;
+import org.battlearena.actions.specialskill.SpecialSkill;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
+import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
@@ -34,9 +37,6 @@ public class Game {
         // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
 
-
-        // playTurn();
-
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
@@ -56,26 +56,32 @@ public class Game {
                     if (chosenCharacter.trim().equalsIgnoreCase(c.getClass().getSimpleName())) {
                         System.out.println("You have chosen the character " + c.getClass().getSimpleName() + " and your name is: " + name);
                         selectedCharacter = c;
-                        System.out.print("The computer got the character: " + selectedCharacter.getClass().getSimpleName());
+                        System.out.println("The computer got the character: " + selectedCharacter.getClass().getSimpleName());
                         break;
                     }
                 }
             }
             if (selectedCharacter == null) {
                 System.out.println("You have to type in a valid character, do you want to quit? (Y/N)");
-                String response = scanner.nextLine();
-                if (response.trim().equalsIgnoreCase("Y")) {
-                    break;
-                }
+                promptQuitGame();
             }
         }
-        if (selectedCharacter != null) {
-            Player humanPlayer = new Player(name, selectedCharacter);
-            Player computerPlayer = getComputerPlayer();
-            addPlayer(humanPlayer);
-            addPlayer(computerPlayer);
-        }
+
+        Player humanPlayer = new Player(name, selectedCharacter);
+        humanPlayer.setIsHuman();
+        Player computerPlayer = getComputerPlayer();
+        addPlayer(humanPlayer);
+        addPlayer(computerPlayer);
+
         Collections.shuffle(players); // slumpmässig ordning för listan players
+        playTurn(humanPlayer, computerPlayer);
+    }
+
+    private void promptQuitGame() {
+        String response = scanner.nextLine();
+        if (response.trim().equalsIgnoreCase("Y")) {
+            System.exit(0);
+        }
     }
 
     private Player getComputerPlayer() {
@@ -95,9 +101,26 @@ public class Game {
         }
     }
 
-    public void TurnActions(Turn turn) {
+    public void turnActions(Turn turn) {
+        // Randomly select who starts the first action.
         // Action 1
         // Prompt for action (including attack)
+        Actionable action = null;
+        while (action == null) {
+            try {
+                // if player is human
+                System.out.print("What would you like to do? (Attack / Defend / Special): ");
+                String input = scanner.nextLine();
+                action = selectAction(input/*player, opponent*/); // temporarily disabled until Turn has been sorted
+                // else, player is computer. Then we need to randomly pick an action for the computer
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Do you want to quit? (Y/N): ");
+                promptQuitGame();
+            }
+        }
+
+        action.perform();
         // After action completed, call turn.increaseActionCount()
 
         // Action 2
@@ -108,10 +131,13 @@ public class Game {
         // else force player to attack, they're not getting any other option
     }
 
-    public void playTurn() {
+    public void playTurn(Player humanPlayer, Player computerPlayer) {
+        // Create new turn
+        // Randomly select a player, whom will get the first action
+        // playAction(humanPlayer, computerPlayer);
         for (Player p : players) { // för p i players
             Turn turn = new Turn(p); // varje player p utför sin tur.
-            TurnActions(turn);     // Anropa metoden playturnaction för att spela sin tur.
+            turnActions(turn);     // Anropa metoden playturnaction för att spela sin tur.
         }
     }
 
@@ -151,6 +177,19 @@ public class Game {
         return endGameMessage.toString();
     }
 
+    public Actionable selectAction(String input/*Player player, Player opponent*/) throws InvalidInputException {
+        switch (input.toLowerCase().trim()) {
+            case "attack":
+                return new Attack();
+            /* case "defend":
+                return new Defend(player, opponent);
+            */
+            case "special":
+                return new SpecialSkill();
+            default:
+                throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend or Special");
+        }
+    }
 
     public String displayPlayerStatusInfo(Player player) {
         StringBuilder playerStatusInfo = new StringBuilder();

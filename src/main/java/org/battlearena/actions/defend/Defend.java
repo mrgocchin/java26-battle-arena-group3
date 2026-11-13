@@ -16,5 +16,7 @@ public class Defend implements Actionable {
     @Override
     public void perform() {
         player.setDefending();
+
+        System.out.println("You are now defending against the next attack.");
     }
 }
