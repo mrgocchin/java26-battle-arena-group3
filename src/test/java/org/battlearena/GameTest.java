@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,7 +64,7 @@ class GameTest {
                 " played by " +
                 player.getName() +
                 " has " +
-                player.getHP() + "\n";
+                player.getHp() + "\n";
                 //" HP remaining and has the following effects: "
 
         assertEquals(expectedOutput, game.displayPlayerStatusInfo(player));

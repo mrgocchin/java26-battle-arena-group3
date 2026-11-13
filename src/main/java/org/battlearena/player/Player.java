@@ -22,7 +22,7 @@ public class Player {
         this.hp = playerCharacter.getMaxHp();
     }
 
-    public int getHP() {
+    public int getHp() {
         return this.hp;
     }
 

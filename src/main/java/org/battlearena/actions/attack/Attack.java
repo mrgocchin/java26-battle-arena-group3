@@ -32,11 +32,25 @@ public class Attack implements Actionable {
         damage = (- random.nextInt(minAttack, maxAttack + 1));
 
         return damage;
-
     }
+
+//    public void applyHasAttacked{
+//        attacker.setHasAttacked(True);
+//    }
+    //maybe could be moved to Defend Class.
+    public int applyDefence() {
+        if (opponent.isDefending()){
+            damage = 0;
+        }
+        return damage;
+    }
+
     public void applyDamage(){
-       int currentHp = opponent.getHP();
+       int currentHp = opponent.getHp();
        int newHp = currentHp + damage;
+       if (newHp < opponent.getPlayerCharacter().getMinHp()){
+           newHp = opponent.getPlayerCharacter().getMinHp();
+       }
        opponent.setHp(newHp);
     }
     public String attackSummary(){
@@ -45,7 +59,7 @@ public class Attack implements Actionable {
                 " inflicted a damage of: " + damage +
                 "Hp against the " + opponent.getPlayerCharacter().getClass().getSimpleName() +
                 " played by " + opponent.getName() +
-                ", which now stand with: " + opponent.getHP() + "Hp";
+                ", which now stand with: " + opponent.getHp() + "Hp";
         return attackSummary;
     }
 

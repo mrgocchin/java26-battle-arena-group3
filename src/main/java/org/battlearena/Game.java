@@ -9,7 +9,6 @@ import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
@@ -119,7 +118,7 @@ public class Game {
     public boolean alivePlayersCheck() {
         boolean arePlayersAlive = true;
         for (Player player : players) {
-            if (player.getHP() <= 0) {
+            if (player.getHp() <= 0) {
                 arePlayersAlive = false;
                 //unsure about break here.
                 //can both player die in the same turn?
@@ -135,7 +134,7 @@ public class Game {
     public String assignWinner() {
         StringBuilder endGameMessage = new StringBuilder();
         for (Player player : players) {
-            if (player.getHP() <= 0) {
+            if (player.getHp() <= 0) {
                 player.setPlayerStatus(PlayerStatus.LOSER);
                 endGameMessage.append(player.gameOverMessage());
 
@@ -153,18 +152,14 @@ public class Game {
 
 
     public String displayPlayerStatusInfo(Player player) {
-        StringBuilder playerStatusInfo = new StringBuilder();
+        String playerStatusInfo = "The "
+                + (player.getPlayerCharacter().getClass().getSimpleName())+
+                " played by " + player.getName() +
+                " has " + player.getHp() +
+                //" HP remaining and has the following effects: " +
+                ("\n");
 
-        playerStatusInfo.append("The ")
-                .append(player.getPlayerCharacter().getClass().getSimpleName())
-                .append(" played by ")
-                .append(player.getName())
-                .append(" has ")
-                .append(player.getHP())
-                //.append(" HP remaining and has the following effects: ")
-                .append("\n");
-
-        return playerStatusInfo.toString();
+        return playerStatusInfo;
     }
 
 
