@@ -22,7 +22,7 @@ public class Attack implements Actionable {
     public void perform() {
         // TODO
     }
-
+    //The method gives a negative number since damage is a negative effect.
     public int calculateDamage() {
         Character playerCharacter = attacker.getPlayerCharacter();
 
@@ -44,7 +44,8 @@ public class Attack implements Actionable {
         }
         return damage;
     }
-
+    //ApplyDamage has currentHp + damage since damage is negative.
+    //Also make it easy to refactor to generalHpModifier method ( for healing and more).
     public void applyDamage(){
        int currentHp = opponent.getHp();
        int newHp = currentHp + damage;
