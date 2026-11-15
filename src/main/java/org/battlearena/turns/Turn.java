@@ -1,6 +1,9 @@
 package org.battlearena.turns;
 
 import org.battlearena.player.Player;
+import org.battlearena.actions.Actionable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Turn {
     private static int turnCount = 0;
@@ -8,26 +11,29 @@ public class Turn {
     private Player firstPlayer;
     private Player secondPlayer;
 
+    private ArrayList<Actionable> performedActions;
+
     public Turn() {
+        this.performedActions = new ArrayList<>();
+
         turnCount++;
     }
 
-    public void decreaseRounds() {
+    private void decreaseRounds() {
         if (roundsRemaining == 0) {
             return;
         }
         roundsRemaining--;
     }
 
-    public void setFirstPlayer(Player player) {
-        firstPlayer = player;
+    public void performAction(Actionable action) throws ExceededActionException{ 
+        increaseActionCount();
+        action.perform();
+        System.out.println(action.getDescription());
+        performedActions.add(action);
     }
 
-    public void setSecondPlayer(Player player) {
-        secondPlayer = player;
-    }
-
-    public int getRoundsRemaining() {
-        return roundsRemaining;
+    public List<Actionable> getPerformedActions(){
+        return performedActions;
     }
 }

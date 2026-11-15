@@ -7,12 +7,14 @@ import org.battlearena.actions.specialskill.SpecialSkill;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
+import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.characters.Character;
 import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
+import org.battlearena.actions.Actionable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,43 +104,30 @@ public class Game {
         }
     }
 
-    public void turnActions(Player player, Player opponent) {
-        /*
-            Scenarios:
-                Round 1: Neither player has attacked yet
-                Round 2: Player might have attacked, so now we need to check on that
-         */
-        // TODO check if player has used their two actions. If they have, prevent them from continuing here.
-        if (! player.hasAttackedThisTurn()) {
-            Actionable action = null;
-            while (action == null) {
-                try {
-                    // if player is human
-                    System.out.print("What would you like to do? (Attack / Defend / Special): ");
-                    String input = scanner.nextLine();
-                    action = selectAction(input, player, opponent);
-                    // else, player is computer. Then we need to randomly pick an action for the computer
-                } catch (InvalidInputException e) {
-                    System.out.println(e.getMessage());
-                    System.out.print("Do you want to quit? (Y/N): ");
-                    promptQuitGame();
-                }
-            }
-
-            action.perform();
-            try {
-                player.increaseActionCount();
-            } catch (ExceededActionException e) {
-                // TODO this needs better handling
-                System.out.println(e.getMessage());
-            }
-        } else {
-            // Prompt for action (excluding attack)
-            // After action completed, call turn.increaseActionCount()
-        }
-        // else force player to attack, they're not getting any other option
+    private Actionable getAction(Turn turn){
+        //TODO, read and create an action
+        Actionable action=null;
+        return action;
     }
 
+    private void turnActions(Turn turn) {
+        // Action 1
+        // Prompt for action (including attack)
+        try{ 
+            turn.performAction(getAction(turn)); 
+        }catch(ExceededActionException e){
+            System.out.println("Too many actions");
+        }
+
+        // Action 2
+        if (turn.hasAttackedThisTurn()) {
+            // Prompt for action (excluding attack)
+        }
+        // else force player to attack, they're not getting any other option 
+        
+    }
+
+    
     public void playTurn() {
         Turn turn = new Turn();
 

@@ -24,7 +24,11 @@ public class Attack implements Actionable {
         applyDamage();
         attackSummary();
     }
-
+    @Override 
+    public String getDescription(){
+        return "The player attacked";
+    }
+    
     //The method gives a negative number since damage is a negative effect.
     public int calculateDamage() {
         Character playerCharacter = attacker.getPlayerCharacter();
