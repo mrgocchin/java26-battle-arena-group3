@@ -9,18 +9,20 @@ private int healAmount;
 
     @Override
     public void perform() {
-
+        calculateHealAmount();
+        applyHealing();
+        healSummary();
     }
+
     public Heal (Player healingPlayer){
         this.healingPlayer = healingPlayer;
     }
 
     public int calculateHealAmount() {
-        double healAmountDouble = healingPlayer.getPlayerCharacter().getMaxHp() * 0.1;
-        healAmount = (int) Math.round(healAmountDouble);
+        int healAmount = healingPlayer.getPlayerCharacter().getMaxHp() / 10;
         return healAmount;
     }
-    public void applyhealing (){
+    public void applyHealing() {
         int currentHp = healingPlayer.getHp();
         int healAmount = calculateHealAmount();
         int newHp = currentHp + healAmount;
@@ -37,4 +39,11 @@ private int healAmount;
         return summaryOfHealing;
     }
 
+    public int getHealAmount() {
+        return healAmount;
+    }
+
+    public void setHealAmount(int healAmount) {
+        this.healAmount = healAmount;
+    }
 }
