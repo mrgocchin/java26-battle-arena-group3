@@ -2,11 +2,13 @@ package org.battlearena;
 
 import org.battlearena.actions.Actionable;
 import org.battlearena.actions.attack.Attack;
+import org.battlearena.actions.defend.Defend;
 import org.battlearena.actions.specialskill.SpecialSkill;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.characters.Character;
+import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
@@ -101,28 +103,36 @@ public class Game {
     }
 
     public void turnActions(Player player, Player opponent) {
-        // Action 1
-        // Prompt for action (including attack)
-        Actionable action = null;
-        while (action == null) {
-            try {
-                // if player is human
-                System.out.print("What would you like to do? (Attack / Defend / Special): ");
-                String input = scanner.nextLine();
-                action = selectAction(input/*player, opponent*/); // temporarily disabled until Turn has been sorted
-                // else, player is computer. Then we need to randomly pick an action for the computer
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
-                System.out.print("Do you want to quit? (Y/N): ");
-                promptQuitGame();
+        /*
+            Scenarios:
+                Round 1: Neither player has attacked yet
+                Round 2: Player might have attacked, so now we need to check on that
+         */
+        // TODO check if player has used their two actions. If they have, prevent them from continuing here.
+        if (! player.hasAttackedThisTurn()) {
+            Actionable action = null;
+            while (action == null) {
+                try {
+                    // if player is human
+                    System.out.print("What would you like to do? (Attack / Defend / Special): ");
+                    String input = scanner.nextLine();
+                    action = selectAction(input, player, opponent);
+                    // else, player is computer. Then we need to randomly pick an action for the computer
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                    System.out.print("Do you want to quit? (Y/N): ");
+                    promptQuitGame();
+                }
             }
-        }
 
-        action.perform();
-        // After action completed, call turn.increaseActionCount()
-
-        // Action 2
-        if (player.hasAttackedThisTurn()) {
+            action.perform();
+            try {
+                player.increaseActionCount();
+            } catch (ExceededActionException e) {
+                // TODO this needs better handling
+                System.out.println(e.getMessage());
+            }
+        } else {
             // Prompt for action (excluding attack)
             // After action completed, call turn.increaseActionCount()
         }
@@ -130,23 +140,17 @@ public class Game {
     }
 
     public void playTurn() {
-        // Create new turn
         Turn turn = new Turn();
-        // Randomly select a player, whom will get the first action
-        Collections.shuffle(players);
 
+        Collections.shuffle(players);
         Player firstPlayer = players.getFirst();
         Player secondPlayer = players.getLast();
-        turn.setFirstPlayer(firstPlayer);
-        turn.setSecondPlayer(secondPlayer);
+        firstPlayer.setHasAttackedThisTurn(false);
+        secondPlayer.setHasAttackedThisTurn(false);
 
         for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
-            // First player goes
             turnActions(firstPlayer, secondPlayer);
-
-            // Second player next
             turnActions(secondPlayer, firstPlayer);
-
             turn.decreaseRounds();
         }
     }
@@ -167,7 +171,7 @@ public class Game {
     }
 
     //this method should only assign winner but for now it also returns messages.
-// can be refactored to 2 different methods.
+    // can be refactored to 2 different methods.
     public String assignWinner() {
         StringBuilder endGameMessage = new StringBuilder();
         for (Player player : players) {
@@ -187,14 +191,12 @@ public class Game {
         return endGameMessage.toString();
     }
 
-    public Actionable selectAction(String input/*Player player, Player opponent*/) throws InvalidInputException {
+    public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
         switch (input.toLowerCase().trim()) {
-            /*
             case "attack":
-                return new Attack();
+                return new Attack(player, opponent);
              case "defend":
                 return new Defend(player, opponent);
-            */
             case "special":
                 return new SpecialSkill();
             default:
