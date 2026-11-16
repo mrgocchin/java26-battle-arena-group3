@@ -26,21 +26,33 @@ class HealTest {
     }
 
     @Test
-    void calculateHealShouldBe10PerCentOfMaxHp() {
-        int expectedHealingWarrior = 10;
+    void calculateHealShouldBe1TenthOfMaxHp() {
+        int expectedHealingWarrior = healingPlayer.getPlayerCharacter().getMaxHp() / 10;
         int actualHealing = healActionTest.calculateHealAmount();
-        System.out.println(expectedHealingWarrior);
-        System.out.println(actualHealing);
+        //System.out.println(expectedHealingWarrior);
+        //System.out.println(actualHealing);
         assertEquals(expectedHealingWarrior, actualHealing);
     }
 
     @Test
-    void applyhealing() {
-        healingPlayer.setHp(50);
-        healActionTest.applyhealing();
+    void applyHealingShouldNotGoAboveMaxHp() {
+        int maxHealthWarrior = healingPlayer.getPlayerCharacter().getMaxHp();
+        healingPlayer.setHp(95);
+        healActionTest.applyHealing();
+        System.out.println(healingPlayer.getHp());
+        assertEquals(maxHealthWarrior,maxHealthWarrior);
+
     }
 
     @Test
-    void healSummary() {
+    void healSummaryShouldReturnRightString() {
+        int healTest = 10;
+        healingPlayer.setHp(50);
+        healActionTest.setHealAmount(healTest);
+        String summaryOfTheHealingAction = healActionTest.healSummary();
+        String expectedSummary = "The Warrior played by testHealer has healed for: 10HP, and now stand with: 50Hp";
+        System.out.println(summaryOfTheHealingAction);
+        System.out.println(expectedSummary);
+        assertEquals(expectedSummary,summaryOfTheHealingAction);
     }
 }

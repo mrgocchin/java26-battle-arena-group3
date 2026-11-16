@@ -66,9 +66,9 @@ class AttackTest {
     }
     @Test
     void attackSummaryShouldReturnTheRightString() {
-        int damagetest = -10;
+        int damageTest = -10;
         opponentTest.setHp(90);
-        attackActionTest.setDamage(damagetest);
+        attackActionTest.setDamage(damageTest);
         String summaryOfTheAttackAction = attackActionTest.attackSummary();
         String expectedSummary = "The Mage played by testAttacker inflicted a damage of:" +
                 " -10Hp against the Necromancer played by testOpponent," +
