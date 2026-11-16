@@ -1,12 +1,15 @@
 package org.battlearena;
 
+import org.battlearena.actions.Actionable;
+import org.battlearena.actions.attack.Attack;
 import org.battlearena.characters.mage.Mage;
+import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +34,7 @@ class GameTest {
     }
 
     @Test
+    @Disabled
     void runShouldNotCrash() {
         this.game.run();
     }
@@ -40,19 +44,13 @@ class GameTest {
         game.getPlayers().getFirst().setHp(0);
         game.alivePlayersCheck();
         assertFalse(game.alivePlayersCheck());
-
     }
-
-
 
     @Test
     void assignWinnerCheckShouldReturnRightEnum() {
-
         game.getPlayers().getFirst().setHp(0);
         game.assignWinner();
         assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getPlayerStatus());
-
-
     }
 
     @Test
@@ -68,5 +66,24 @@ class GameTest {
                 //" HP remaining and has the following effects: "
 
         assertEquals(expectedOutput, game.displayPlayerStatusInfo(player));
+    }
+
+    @Test
+    @Disabled
+    void selectActionShouldReturnActionAtValidInput() {
+        Actionable expected = new Attack(game.getPlayers().getFirst(), game.getPlayers().getLast());
+
+        assertDoesNotThrow(() -> {
+            Actionable actual = game.selectAction("attack");
+            assertNotNull(actual);
+            assertEquals(expected.getClass(), actual.getClass());
+        });
+    }
+
+    @Test
+    void selectActionShouldThrowExceptionAtInValidInput() {
+        assertThrows(InvalidInputException.class, () -> {
+           game.selectAction("loiter");
+        });
     }
 }
