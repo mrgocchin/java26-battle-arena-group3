@@ -20,8 +20,11 @@ public class Attack implements Actionable {
 
     @Override
     public void perform() {
-        // TODO
+        calculateDamage();
+        applyDamage();
+        attackSummary();
     }
+
     //The method gives a negative number since damage is a negative effect.
     public int calculateDamage() {
         Character playerCharacter = attacker.getPlayerCharacter();
@@ -34,20 +37,14 @@ public class Attack implements Actionable {
         return damage;
     }
 
-//    public void applyHasAttacked{
-//        attacker.setHasAttacked(True);
-//    }
-    //maybe could be moved to Defend Class.
-    public int applyDefence() {
-        if (opponent.isDefending()){
-            damage = 0;
-        }
-        return damage;
-    }
+    //applyDefence integrated in applyDamage.
     //ApplyDamage has currentHp + damage since damage is negative.
     //Also make it easy to refactor to generalHpModifier method ( for healing and more).
     public void applyDamage(){
        int currentHp = opponent.getHp();
+        if (opponent.isDefending()){
+            damage = 0;
+        }
        int newHp = currentHp + damage;
        if (newHp < opponent.getPlayerCharacter().getMinHp()){
            newHp = opponent.getPlayerCharacter().getMinHp();
