@@ -26,7 +26,6 @@ class GameTest {
         Player computerPlayer = new Player("TestNameComputer", new Mage());
         game.addPlayer(humanPlayer);
         game.addPlayer(computerPlayer);
-
     }
 
     @AfterEach
@@ -69,12 +68,13 @@ class GameTest {
     }
 
     @Test
-    @Disabled
     void selectActionShouldReturnActionAtValidInput() {
-        Actionable expected = new Attack(game.getPlayers().getFirst(), game.getPlayers().getLast());
+        Player player = game.getPlayers().getFirst();
+        Player opponent = game.getPlayers().getLast();
+        Actionable expected = new Attack(player, opponent);
 
         assertDoesNotThrow(() -> {
-            Actionable actual = game.selectAction("attack");
+            Actionable actual = game.selectAction("attack", player, opponent);
             assertNotNull(actual);
             assertEquals(expected.getClass(), actual.getClass());
         });
@@ -82,8 +82,10 @@ class GameTest {
 
     @Test
     void selectActionShouldThrowExceptionAtInValidInput() {
+        Player player = game.getPlayers().getFirst();
+        Player opponent = game.getPlayers().getLast();
         assertThrows(InvalidInputException.class, () -> {
-           game.selectAction("loiter");
+           game.selectAction("loiter", player, opponent);
         });
     }
 }
