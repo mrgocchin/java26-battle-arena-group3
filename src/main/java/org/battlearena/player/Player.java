@@ -2,6 +2,7 @@ package org.battlearena.player;
 
 import org.battlearena.actions.Effect;
 import org.battlearena.characters.Character;
+import org.battlearena.exceptions.ExceededActionException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +12,10 @@ public class Player {
     private int hp;
     private Character playerCharacter;
     private boolean defending = false;
+    private boolean hasAttackedThisTurn = false;
     private PlayerStatus playerStatus = PlayerStatus.PLAYING;
     private boolean isHumanPlayer = false;
+    private int actionCount = 0;
     //playerStatus enum instead of isAlive, so only one status at the time is possible.
 
     private Map<String, Effect> effects = new HashMap<>();
@@ -29,6 +32,14 @@ public class Player {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public void setHasAttackedThisTurn(boolean hasAttackedThisTurn) {
+        this.hasAttackedThisTurn = hasAttackedThisTurn;
+    }
+
+    public boolean hasAttackedThisTurn() {
+        return hasAttackedThisTurn;
     }
 
     public PlayerStatus getPlayerStatus() {
@@ -72,5 +83,17 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void increaseActionCount() throws ExceededActionException {
+        if (actionCount >= 2) {
+            throw new ExceededActionException("You have already used your two actions, and cannot do anything else until your next turn.");
+        }
+        actionCount++;
+    }
+
+
+    public int getActionCount() {
+        return actionCount;
     }
 }

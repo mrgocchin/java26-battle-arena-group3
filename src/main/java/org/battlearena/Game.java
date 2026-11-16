@@ -73,8 +73,7 @@ public class Game {
         addPlayer(humanPlayer);
         addPlayer(computerPlayer);
 
-        Collections.shuffle(players); // slumpmässig ordning för listan players
-        playTurn(humanPlayer, computerPlayer);
+        playTurn();
     }
 
     private void promptQuitGame() {
@@ -101,8 +100,7 @@ public class Game {
         }
     }
 
-    public void turnActions(Turn turn) {
-        // Randomly select who starts the first action.
+    public void turnActions(Player player, Player opponent) {
         // Action 1
         // Prompt for action (including attack)
         Actionable action = null;
@@ -124,20 +122,32 @@ public class Game {
         // After action completed, call turn.increaseActionCount()
 
         // Action 2
-        if (turn.hasAttackedThisTurn()) {
+        if (player.hasAttackedThisTurn()) {
             // Prompt for action (excluding attack)
             // After action completed, call turn.increaseActionCount()
         }
         // else force player to attack, they're not getting any other option
     }
 
-    public void playTurn(Player humanPlayer, Player computerPlayer) {
+    public void playTurn() {
         // Create new turn
+        Turn turn = new Turn();
         // Randomly select a player, whom will get the first action
-        // playAction(humanPlayer, computerPlayer);
-        for (Player p : players) { // för p i players
-            Turn turn = new Turn(p); // varje player p utför sin tur.
-            turnActions(turn);     // Anropa metoden playturnaction för att spela sin tur.
+        Collections.shuffle(players);
+
+        Player firstPlayer = players.getFirst();
+        Player secondPlayer = players.getLast();
+        turn.setFirstPlayer(firstPlayer);
+        turn.setSecondPlayer(secondPlayer);
+
+        for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
+            // First player goes
+            turnActions(firstPlayer, secondPlayer);
+
+            // Second player next
+            turnActions(secondPlayer, firstPlayer);
+
+            turn.decreaseRounds();
         }
     }
 

@@ -1,36 +1,33 @@
 package org.battlearena.turns;
 
-import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.player.Player;
 
 public class Turn {
     private static int turnCount = 0;
-    private int actionCount = 0;
-    private boolean hasAttackedThisTurn = false;
-    private Player currentPlayer;
+    private int roundsRemaining = 2;
+    private Player firstPlayer;
+    private Player secondPlayer;
 
-    public Turn(Player player) {
-        this.currentPlayer = player;
-
+    public Turn() {
         turnCount++;
     }
 
-    public void increaseActionCount() throws ExceededActionException {
-        if (actionCount >= 2) {
-            throw new ExceededActionException("You have already used your two actions, and cannot do anything else until your next turn.");
+    public void decreaseRounds() {
+        if (roundsRemaining == 0) {
+            return;
         }
-        actionCount++;
+        roundsRemaining--;
     }
 
-    public boolean hasAttackedThisTurn() {
-        return hasAttackedThisTurn;
+    public void setFirstPlayer(Player player) {
+        firstPlayer = player;
     }
 
-    public int getActionCount() {
-        return actionCount;
+    public void setSecondPlayer(Player player) {
+        secondPlayer = player;
     }
 
-    public void setHasAttackedThisTurn(boolean hasAttackedThisTurn) {
-        this.hasAttackedThisTurn = hasAttackedThisTurn;
+    public int getRoundsRemaining() {
+        return roundsRemaining;
     }
 }
