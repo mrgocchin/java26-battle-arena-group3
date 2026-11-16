@@ -179,9 +179,10 @@ public class Game {
 
     public Actionable selectAction(String input/*Player player, Player opponent*/) throws InvalidInputException {
         switch (input.toLowerCase().trim()) {
+            /*
             case "attack":
                 return new Attack();
-            /* case "defend":
+             case "defend":
                 return new Defend(player, opponent);
             */
             case "special":

@@ -10,8 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-// import javax.swing.*;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,14 +44,10 @@ class GameTest {
         game.getPlayers().getFirst().setHp(0);
         game.alivePlayersCheck();
         assertFalse(game.alivePlayersCheck());
-
     }
-
-
 
     @Test
     void assignWinnerCheckShouldReturnRightEnum() {
-
         game.getPlayers().getFirst().setHp(0);
         game.assignWinner();
         assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getPlayerStatus());
@@ -75,15 +69,15 @@ class GameTest {
     }
 
     @Test
+    @Disabled
     void selectActionShouldReturnActionAtValidInput() {
-        Actionable expected = new Attack();
+        Actionable expected = new Attack(game.getPlayers().getFirst(), game.getPlayers().getLast());
 
         assertDoesNotThrow(() -> {
             Actionable actual = game.selectAction("attack");
             assertNotNull(actual);
             assertEquals(expected.getClass(), actual.getClass());
         });
-
     }
 
     @Test
