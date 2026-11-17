@@ -15,6 +15,7 @@ import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 import org.battlearena.actions.Actionable;
+import org.battlearena.player.CharacterCreator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,16 +24,17 @@ import java.util.Scanner;
 
 
 public class Game {
-
+    private CharacterCreator characterCreator;
     private ArrayList<Player> players;
-
     private Scanner scanner;
 
     public Game(Scanner scanner) {
         this.scanner = scanner;
         this.players = new ArrayList<>();
+        this.characterCreator = new CharacterCreator(scanner);
     }
 
+    @Deprecated // Den har flyttats till CharacterCreator.
     public void addPlayer(Player player) {
         players.add(player);
     }
@@ -41,7 +43,7 @@ public class Game {
         // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
 
-        System.out.print("Enter your name: ");
+        /*System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
         Character Warrior = new Warrior();
@@ -75,11 +77,13 @@ public class Game {
         humanPlayer.setIsHuman();
         Player computerPlayer = getComputerPlayer();
         addPlayer(humanPlayer);
-        addPlayer(computerPlayer);
+        addPlayer(computerPlayer);*/
 
+        this.players = characterCreator.getPlayers();
         playTurn();
     }
 
+    @Deprecated // Den är flyttad till CharacterCreator
     private void promptQuitGame() {
         String response = scanner.nextLine();
         if (response.trim().equalsIgnoreCase("Y")) {
@@ -87,10 +91,12 @@ public class Game {
         }
     }
 
+    @Deprecated // Den är flyttad till CharacterCreator
     private Player getComputerPlayer() {
         return new Player("Computer player", getComputerPlayerCharacter());
     }
 
+    @Deprecated // metoden ska inte användas längre, har flyttats till CharacterCreator.
     private Character getComputerPlayerCharacter() {
         Random random = new Random();
         int randomNumber = random.nextInt(3);

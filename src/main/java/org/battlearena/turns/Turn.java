@@ -27,7 +27,6 @@ public class Turn {
     }
 
     public void performAction(Actionable action) /*throws ExceededActionException*/{
-        //increaseActionCount(); 
         action.perform();
         System.out.println(action.getDescription());
         performedActions.add(action);
