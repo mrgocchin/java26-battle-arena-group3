@@ -26,8 +26,8 @@ public class Turn {
         roundsRemaining--;
     }
 
-    public void performAction(Actionable action) throws ExceededActionException{ 
-        increaseActionCount();
+    public void performAction(Actionable action) /*throws ExceededActionException*/{
+        //increaseActionCount(); 
         action.perform();
         System.out.println(action.getDescription());
         performedActions.add(action);
