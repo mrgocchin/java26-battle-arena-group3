@@ -7,4 +7,8 @@ public class SpecialSkill implements Actionable {
     public void perform() {
         // TODO
     }
+    @Override 
+    public String getDescription(){
+        return "A special skill has been used";
+    }
 }

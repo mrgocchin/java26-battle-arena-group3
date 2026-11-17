@@ -19,4 +19,8 @@ public class Defend implements Actionable {
 
         System.out.println("You are now defending against the next attack.");
     }
+    @Override 
+    public String getDescription(){
+        return "The player defended";
+    }
 }
