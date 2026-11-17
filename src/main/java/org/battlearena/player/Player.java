@@ -92,8 +92,17 @@ public class Player {
         actionCount++;
     }
 
-
     public int getActionCount() {
         return actionCount;
+    }
+
+    public String displayPlayerStatusInfo() {
+        String playerStatusInfo = "The "
+                + (this.getPlayerCharacter().getClass().getSimpleName())+
+                " played by " + this.getName() +
+                " has " + this.getHp() +
+                //" HP remaining and has the following effects: " +
+                ("\n");
+        return playerStatusInfo;
     }
 }

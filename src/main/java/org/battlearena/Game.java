@@ -198,7 +198,8 @@ public class Game {
                 throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend or Special");
         }
     }
-
+    
+    @Deprecated // Flyttad till Player klassen
     public String displayPlayerStatusInfo(Player player) {
         String playerStatusInfo = "The "
                 + (player.getPlayerCharacter().getClass().getSimpleName())+
