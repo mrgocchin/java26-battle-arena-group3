@@ -46,4 +46,18 @@ class PlayerTest {
         int actualAfterIncrease = player.getActionCount();
         assertEquals(2  , actualAfterIncrease);
     }
+
+    @Test
+    void displayPlayerStatusInfoShouldReturnRightString(){ // player finns i klassen och behöver inte hämtas från game
+        player.setHp(50);
+        String expectedOutput = "The " +
+                player.getPlayerCharacter().getClass().getSimpleName() +
+                " played by " +
+                player.getName() +
+                " has " +
+                player.getHp() + "\n";
+                //" HP remaining and has the following effects: "
+
+        assertEquals(expectedOutput, player.displayPlayerStatusInfo());
+    }
 }
