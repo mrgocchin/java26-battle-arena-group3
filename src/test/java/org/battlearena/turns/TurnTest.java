@@ -1,5 +1,11 @@
 package org.battlearena.turns;
 
+import org.battlearena.actions.Actionable;
+import org.battlearena.actions.attack.Attack;
+import org.battlearena.characters.necromancer.Necromancer;
+import org.battlearena.characters.warrior.Warrior;
+import org.battlearena.exceptions.InvalidInputException;
+import org.battlearena.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +17,8 @@ class TurnTest {
     @BeforeEach
     void setUp() {
         this.turn = new Turn();
+        turn.setFirstPlayer(new Player("Picard", new Warrior()));
+        turn.setSecondPlayer(new Player("Skywalker", new Necromancer()));
     }
 
     @Test
@@ -22,5 +30,27 @@ class TurnTest {
         turn.decreaseRounds();
 
         assertEquals(0, turn.getRoundsRemaining());
+    }
+
+    @Test
+    void selectActionShouldReturnActionAtValidInput() {
+        Player player = turn.getFirstPlayer();
+        Player opponent = turn.getSecondPlayer();
+        Actionable expected = new Attack(player, opponent);
+
+        assertDoesNotThrow(() -> {
+            Actionable actual = turn.selectAction("attack", player, opponent);
+            assertNotNull(actual);
+            assertEquals(expected.getClass(), actual.getClass());
+        });
+    }
+
+    @Test
+    void selectActionShouldThrowExceptionAtInValidInput() {
+        Player player = turn.getFirstPlayer();
+        Player opponent = turn.getSecondPlayer();
+        assertThrows(InvalidInputException.class, () -> {
+            turn.selectAction("loiter", player, opponent);
+        });
     }
 }

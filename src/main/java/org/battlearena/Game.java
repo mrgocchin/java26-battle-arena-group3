@@ -103,6 +103,7 @@ public class Game {
         }
     }
 
+    // NOTE: turnActions is pending removal after refactoring
     private void turnActions(Turn turn, Player player, Player opponent) {
         /*
             Scenarios:
@@ -141,9 +142,8 @@ public class Game {
             // After action completed, call turn.increaseActionCount()
         }
         // else force player to attack, they're not getting any other option
-    }
+    } // end of method pending removal
 
-    
     public void playTurn() {
         Turn turn = new Turn();
 
@@ -153,11 +153,15 @@ public class Game {
         firstPlayer.setHasAttackedThisTurn(false);
         secondPlayer.setHasAttackedThisTurn(false);
 
-        for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
+        turn.setFirstPlayer(firstPlayer);
+        turn.setSecondPlayer(secondPlayer);
+        turn.play();
+
+        /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
             turnActions(turn, firstPlayer, secondPlayer);
             turnActions(turn, secondPlayer, firstPlayer);
             turn.decreaseRounds();
-        }
+        }*/
     }
 
     //maybe methods to be moved to a different class, like gameService?
@@ -196,6 +200,7 @@ public class Game {
         return endGameMessage.toString();
     }
 
+    // NOTE: selectAction() is pending removal after refactoring
     public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
         switch (input.toLowerCase().trim()) {
             case "attack":

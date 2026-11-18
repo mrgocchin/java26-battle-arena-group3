@@ -68,6 +68,7 @@ class GameTest {
     }
 
     @Test
+    @Disabled // Pending removal after refactoring
     void selectActionShouldReturnActionAtValidInput() {
         Player player = game.getPlayers().getFirst();
         Player opponent = game.getPlayers().getLast();
@@ -81,6 +82,7 @@ class GameTest {
     }
 
     @Test
+    @Disabled // Pending removal after refactoring
     void selectActionShouldThrowExceptionAtInValidInput() {
         Player player = game.getPlayers().getFirst();
         Player opponent = game.getPlayers().getLast();

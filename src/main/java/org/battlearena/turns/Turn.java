@@ -1,5 +1,12 @@
 package org.battlearena.turns;
 
+import org.battlearena.Prompter;
+import org.battlearena.actions.attack.Attack;
+import org.battlearena.actions.defend.Defend;
+import org.battlearena.actions.heal.Heal;
+import org.battlearena.actions.specialskill.SpecialSkill;
+import org.battlearena.exceptions.ExceededActionException;
+import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.actions.Actionable;
 import java.util.ArrayList;
@@ -19,6 +26,34 @@ public class Turn {
         turnCount++;
     }
 
+    public void setFirstPlayer(Player player) {
+        firstPlayer = player;
+    }
+
+    public Player getFirstPlayer() {
+        return firstPlayer;
+    }
+
+    public void setSecondPlayer(Player player) {
+        secondPlayer = player;
+    }
+
+    public Player getSecondPlayer() {
+        return secondPlayer;
+    }
+
+    public int getRoundsRemaining() {
+        return roundsRemaining;
+    }
+
+    public List<Actionable> getPerformedActions(){
+        return performedActions;
+    }
+
+    public void addPerformedAction(Actionable action) {
+        performedActions.add(action);
+    }
+
     public void decreaseRounds() {
         if (roundsRemaining == 0) {
             return;
@@ -26,15 +61,65 @@ public class Turn {
         roundsRemaining--;
     }
 
-    public int getRoundsRemaining() {
-        return roundsRemaining;
+    public void play() {
+        for (int i = 0; i <= getRoundsRemaining(); i++) {
+            turnActions(firstPlayer, secondPlayer);
+            turnActions(secondPlayer, firstPlayer);
+            decreaseRounds();
+        }
     }
 
-    public void addPerformedAction(Actionable action) {
-        performedActions.add(action);
+    private void turnActions(Player player, Player opponent) {
+        /*
+            Scenarios:
+                Round 1: Neither player has attacked yet
+                Round 2: Player might have attacked, so now we need to check on that
+         */
+        // TODO check if player has used their two actions. If they have, prevent them from continuing here.
+        if (! player.hasAttackedThisTurn()) {
+            Actionable action = null;
+            while (action == null) {
+                try {
+                    // if player is human
+                    String input = Prompter.promptForAction();
+                    action = selectAction(input, player, opponent);
+                    // else, player is computer. Then we need to randomly pick an action for the computer
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                    System.out.print("Do you want to quit? (Y/N): ");
+                    Prompter.promptQuitGame();
+                }
+            }
+
+            action.perform();
+
+            System.out.println(action.getDescription());
+            addPerformedAction(action);
+            try {
+                player.increaseActionCount();
+            } catch (ExceededActionException e) {
+                // TODO this needs better handling
+                System.out.println(e.getMessage());
+            }
+        } else {
+            // Prompt for action (excluding attack)
+            // After action completed, call turn.increaseActionCount()
+        }
+        // else force player to attack, they're not getting any other option
     }
 
-    public List<Actionable> getPerformedActions(){
-        return performedActions;
+    public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
+        switch (input.toLowerCase().trim()) {
+            case "attack":
+                return new Attack(player, opponent);
+            case "defend":
+                return new Defend(player, opponent);
+            case "heal":
+                return new Heal(player);
+            case "special":
+                return new SpecialSkill();
+            default:
+                throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend or Special");
+        }
     }
 }
