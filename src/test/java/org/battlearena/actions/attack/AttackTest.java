@@ -32,7 +32,7 @@ class AttackTest {
 
     @Test
     void calculateDamageShouldReturnDamageBetween3and12() {
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 1000; i++){
             int damage = attackActionTest.calculateDamage();
             //System.out.println(attackActionTest.getDamage());
             assertTrue(damage <= -3 && damage >= -12, "damage was actually" + damage);
