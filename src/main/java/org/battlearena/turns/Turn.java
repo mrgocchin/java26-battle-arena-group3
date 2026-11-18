@@ -19,17 +19,18 @@ public class Turn {
         turnCount++;
     }
 
-    private void decreaseRounds() {
+    public void decreaseRounds() {
         if (roundsRemaining == 0) {
             return;
         }
         roundsRemaining--;
     }
 
-    public void performAction(Actionable action) /*throws ExceededActionException*/{
-        //increaseActionCount(); 
-        action.perform();
-        System.out.println(action.getDescription());
+    public int getRoundsRemaining() {
+        return roundsRemaining;
+    }
+
+    public void addPerformedAction(Actionable action) {
         performedActions.add(action);
     }
 
