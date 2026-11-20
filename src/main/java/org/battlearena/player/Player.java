@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
+    private static final int ACTIONS_COUNT_MAX = 2;
     private String name;
     private int hp;
     private Character playerCharacter;
@@ -86,12 +87,15 @@ public class Player {
     }
 
     public void increaseActionCount() throws ExceededActionException {
-        if (actionCount >= 2) {
+        if (actionCount >= ACTIONS_COUNT_MAX) {
             throw new ExceededActionException("You have already used your two actions, and cannot do anything else until your next turn.");
         }
         actionCount++;
     }
 
+    public boolean hasRemainingActions() {
+        return actionCount < ACTIONS_COUNT_MAX;
+    }
 
     public int getActionCount() {
         return actionCount;
