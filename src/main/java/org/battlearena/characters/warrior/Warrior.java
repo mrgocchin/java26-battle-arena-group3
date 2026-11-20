@@ -24,7 +24,3 @@ public class Warrior extends Character {
     }
 
 }
-//Special skills to be implemented moved in special skills class
-//public void AdrenalineRush(){
-//int bonus = SpecialSkillEnum.ADRENALINE.getValue();
-//setMinAttackDamage(getDamage() + bonus);
