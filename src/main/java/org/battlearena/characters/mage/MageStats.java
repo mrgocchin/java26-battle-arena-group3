@@ -4,9 +4,7 @@ public enum MageStats {
     MAX_HP(100),
     MIN_HP(0),
     MIN_ATTACK_DAMAGE(3),
-    MAX_ATTACK_DAMAGE(12),
-    MIN_DEFEND(3),
-    MAX_DEFEND(6);
+    MAX_ATTACK_DAMAGE(12);
     //moved special skills to a different enum with all special skills.
 
 
@@ -17,6 +15,6 @@ public enum MageStats {
     }
 
     public int getValue() {
-         return this.value;
+        return this.value;
     }
 }
