@@ -49,7 +49,7 @@ class HealTest {
         int healTest = 10;
         healingPlayer.setHp(50);
         healActionTest.setHealAmount(healTest);
-        String summaryOfTheHealingAction = healActionTest.healSummary();
+        String summaryOfTheHealingAction = healActionTest.getActionSummary();
         String expectedSummary = "The Warrior played by testHealer has healed for: 10HP, and now stand with: 50Hp";
         System.out.println(summaryOfTheHealingAction);
         System.out.println(expectedSummary);
