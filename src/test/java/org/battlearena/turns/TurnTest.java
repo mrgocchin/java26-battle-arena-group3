@@ -4,6 +4,7 @@ import org.battlearena.actions.Actionable;
 import org.battlearena.actions.attack.Attack;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
+import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,20 @@ class TurnTest {
         Player opponent = turn.getSecondPlayer();
         assertThrows(InvalidInputException.class, () -> {
             turn.selectAction("loiter", player, opponent);
+        });
+    }
+
+    @Test
+    void turnActionsThrowsExceptionIfPlayerAlreadyUsedUpTheirActions() {
+        Player player = turn.getFirstPlayer();
+
+        assertDoesNotThrow(() -> {
+            player.increaseActionCount();
+            player.increaseActionCount();
+        });
+
+        assertThrows(ExceededActionException.class, () -> {
+           turn.turnActions(player, turn.getSecondPlayer());
         });
     }
 }

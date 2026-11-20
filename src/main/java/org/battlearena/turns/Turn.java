@@ -63,19 +63,27 @@ public class Turn {
 
     public void play() {
         for (int i = 0; i <= getRoundsRemaining(); i++) {
-            turnActions(firstPlayer, secondPlayer);
-            turnActions(secondPlayer, firstPlayer);
-            decreaseRounds();
+            try {
+                turnActions(firstPlayer, secondPlayer);
+                turnActions(secondPlayer, firstPlayer);
+                decreaseRounds();
+            } catch (ExceededActionException e) {
+                // TODO this needs better handling
+                System.out.println(e.getMessage());
+            }
         }
     }
 
-    private void turnActions(Player player, Player opponent) {
+    protected void turnActions(Player player, Player opponent) throws ExceededActionException {
         /*
             Scenarios:
                 Round 1: Neither player has attacked yet
                 Round 2: Player might have attacked, so now we need to check on that
          */
-        // TODO check if player has used their two actions. If they have, prevent them from continuing here.
+        if (! player.hasRemainingActions()) {
+            throw new ExceededActionException("Player " + player.getName() + " has already used up their actions this turn");
+        }
+
         if (! player.hasAttackedThisTurn()) {
             Actionable action = null;
             while (action == null) {
@@ -95,12 +103,7 @@ public class Turn {
 
             System.out.println(action.getDescription());
             addPerformedAction(action);
-            try {
-                player.increaseActionCount();
-            } catch (ExceededActionException e) {
-                // TODO this needs better handling
-                System.out.println(e.getMessage());
-            }
+            player.increaseActionCount();
         } else {
             // Prompt for action (excluding attack)
             // After action completed, call turn.increaseActionCount()
