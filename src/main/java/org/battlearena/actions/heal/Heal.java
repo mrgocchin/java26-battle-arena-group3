@@ -11,9 +11,11 @@ private int healAmount;
     public void perform() {
         calculateHealAmount();
         applyHealing();
-        healSummary();
+        //getActionSummary();
+        //the method returs a string so perform needs to be modified
+        // or the method can be called separately.
     }
-
+    //getDescription seems redundant since we have getActionSummary
     @Override
     public String getDescription() {
         return "The player healed themself";
@@ -36,7 +38,9 @@ private int healAmount;
         }
         healingPlayer.setHp(newHp);
     }
-    public String healSummary(){
+
+    @Override
+    public String getActionSummary(){
         String summaryOfHealing = "The " + healingPlayer.getPlayerCharacter().getClass().getSimpleName() +
                 " played by " + healingPlayer.getName() +
                 " has healed for: " + healAmount +
