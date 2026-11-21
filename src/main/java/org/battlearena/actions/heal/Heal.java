@@ -3,7 +3,7 @@ package org.battlearena.actions.heal;
 import org.battlearena.actions.Actionable;
 import org.battlearena.player.Player;
 
-public class Heal  implements Actionable{
+public class Heal implements Actionable{
 private Player healingPlayer;
 private int healAmount;
 
@@ -12,6 +12,11 @@ private int healAmount;
         calculateHealAmount();
         applyHealing();
         healSummary();
+    }
+
+    @Override
+    public String getDescription() {
+        return "The player healed themself";
     }
 
     public Heal (Player healingPlayer){

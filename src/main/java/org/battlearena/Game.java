@@ -3,18 +3,17 @@ package org.battlearena;
 import org.battlearena.actions.Actionable;
 import org.battlearena.actions.attack.Attack;
 import org.battlearena.actions.defend.Defend;
+import org.battlearena.actions.heal.Heal;
 import org.battlearena.actions.specialskill.SpecialSkill;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.characters.Character;
-import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
-import org.battlearena.actions.Actionable;
 import org.battlearena.player.CharacterCreator;
 
 import java.util.ArrayList;
@@ -110,30 +109,47 @@ public class Game {
         }
     }
 
-    private Actionable getAction(Turn turn){
-        //TODO, read and create an action
-        Actionable action=null;
-        return action;
-    }
+    // NOTE: turnActions is pending removal after refactoring
+    private void turnActions(Turn turn, Player player, Player opponent) {
+        /*
+            Scenarios:
+                Round 1: Neither player has attacked yet
+                Round 2: Player might have attacked, so now we need to check on that
+         */
+        // TODO check if player has used their two actions. If they have, prevent them from continuing here.
+        if (! player.hasAttackedThisTurn()) {
+            Actionable action = null;
+            while (action == null) {
+                try {
+                    // if player is human
+                    System.out.print("What would you like to do? (Attack / Defend / Special): ");
+                    String input = scanner.nextLine();
+                    action = selectAction(input, player, opponent);
+                    // else, player is computer. Then we need to randomly pick an action for the computer
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                    System.out.print("Do you want to quit? (Y/N): ");
+                    promptQuitGame();
+                }
+            }
 
-    private void turnActions(Turn turn) {
-        // Action 1
-        // Prompt for action (including attack)
-        try{ 
-            turn.performAction(getAction(turn)); 
-        }catch(ExceededActionException e){
-            System.out.println("Too many actions");
-        }
+            action.perform();
 
-        // Action 2
-        if (turn.hasAttackedThisTurn()) {
+            System.out.println(action.getDescription());
+            turn.addPerformedAction(action);
+            try {
+                player.increaseActionCount();
+            } catch (ExceededActionException e) {
+                // TODO this needs better handling
+                System.out.println(e.getMessage());
+            }
+        } else {
             // Prompt for action (excluding attack)
+            // After action completed, call turn.increaseActionCount()
         }
-        // else force player to attack, they're not getting any other option 
-        
-    }
+        // else force player to attack, they're not getting any other option
+    } // end of method pending removal
 
-    
     public void playTurn() {
         Turn turn = new Turn();
 
@@ -143,11 +159,15 @@ public class Game {
         firstPlayer.setHasAttackedThisTurn(false);
         secondPlayer.setHasAttackedThisTurn(false);
 
-        for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
-            turnActions(firstPlayer, secondPlayer);
-            turnActions(secondPlayer, firstPlayer);
+        turn.setFirstPlayer(firstPlayer);
+        turn.setSecondPlayer(secondPlayer);
+        turn.play();
+
+        /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
+            turnActions(turn, firstPlayer, secondPlayer);
+            turnActions(turn, secondPlayer, firstPlayer);
             turn.decreaseRounds();
-        }
+        }*/
     }
 
     //maybe methods to be moved to a different class, like gameService?
@@ -186,12 +206,15 @@ public class Game {
         return endGameMessage.toString();
     }
 
+    // NOTE: selectAction() is pending removal after refactoring
     public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
         switch (input.toLowerCase().trim()) {
             case "attack":
                 return new Attack(player, opponent);
              case "defend":
                 return new Defend(player, opponent);
+             case "heal":
+                return new Heal(player);
             case "special":
                 return new SpecialSkill();
             default:
