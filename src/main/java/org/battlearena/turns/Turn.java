@@ -22,8 +22,11 @@ public class Turn {
 
     public Turn() {
         this.performedActions = new ArrayList<>();
-
         turnCount++;
+    }
+
+    public static int getTurnCount() {
+        return turnCount;
     }
 
     public void setFirstPlayer(Player player) {

@@ -79,7 +79,7 @@ public class Game {
         addPlayer(computerPlayer);*/
 
         this.players = characterCreator.getPlayers();
-        playTurn();
+        playGame();
     }
 
     @Deprecated // Den är flyttad till CharacterCreator
@@ -150,7 +150,11 @@ public class Game {
         // else force player to attack, they're not getting any other option
     } // end of method pending removal
 
-    public void playTurn() {
+    private void playGame(){
+        do{playTurn();} while(! isGameOver());
+    }
+
+    private void playTurn() {
         Turn turn = new Turn();
 
         Collections.shuffle(players);
@@ -162,6 +166,8 @@ public class Game {
         turn.setFirstPlayer(firstPlayer);
         turn.setSecondPlayer(secondPlayer);
         turn.play();
+        System.out.println("Turn "+Turn.getTurnCount()+" has ended");
+        // turn ended
 
         /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
             turnActions(turn, firstPlayer, secondPlayer);
@@ -183,6 +189,9 @@ public class Game {
 
         }
         return arePlayersAlive;
+    }
+    private boolean isGameOver(){
+        return !alivePlayersCheck();
     }
 
     //this method should only assign winner but for now it also returns messages.

@@ -55,6 +55,7 @@ public class Attack implements Actionable {
            newHp = opponent.getPlayerCharacter().getMinHp();
        }
        opponent.setHp(newHp);
+       opponent.setNotDefending();
     }
     public String attackSummary(){
         String attackSummary = "The " + attacker.getPlayerCharacter().getClass().getSimpleName() +
