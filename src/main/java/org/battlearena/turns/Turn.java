@@ -83,6 +83,10 @@ public class Turn {
                 Round 1: Neither player has attacked yet
                 Round 2: Player might have attacked, so now we need to check on that
          */
+        if(player.getHp() <= 0){
+            return;
+        }
+
         if (! player.hasRemainingActions()) {
             throw new ExceededActionException("Player " + player.getName() + " has already used up their actions this turn");
         }

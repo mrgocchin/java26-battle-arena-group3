@@ -151,7 +151,10 @@ public class Game {
     } // end of method pending removal
 
     private void playGame(){
-        do{playTurn();} while(! isGameOver());
+        do{
+            playTurn();
+        } while(! isGameOver());
+        System.out.println(assignWinner());
     }
 
     private void playTurn() {
@@ -167,7 +170,6 @@ public class Game {
         turn.setSecondPlayer(secondPlayer);
         turn.play();
         System.out.println("Turn "+Turn.getTurnCount()+" has ended");
-        // turn ended
 
         /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
             turnActions(turn, firstPlayer, secondPlayer);
@@ -202,7 +204,6 @@ public class Game {
             if (player.getHp() <= 0) {
                 player.setPlayerStatus(PlayerStatus.LOSER);
                 endGameMessage.append(player.gameOverMessage());
-
             }
         }
         endGameMessage.append("\n");
