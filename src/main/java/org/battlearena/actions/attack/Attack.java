@@ -23,6 +23,7 @@ public class Attack implements Actionable {
         calculateDamage();
         applyDamage();
         attackSummary();
+        opponent.setNotDefending();
     }
     @Override 
     public String getDescription(){

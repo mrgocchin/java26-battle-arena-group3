@@ -52,6 +52,7 @@ class GameTest {
         assertEquals(PlayerStatus.LOSER, game.getPlayers().getFirst().getPlayerStatus());
     }
 
+    @Deprecated // Flyttad till PlayerTest
     @Test
     void displayPlayerStatusInfoShouldReturnRightString(){
         Player player = game.getPlayers().getFirst();
