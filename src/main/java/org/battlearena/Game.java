@@ -33,7 +33,7 @@ public class Game {
         this.scanner = scanner;
         this.players = new ArrayList<>();
         this.characterCreator = new CharacterCreator(scanner);
-        this.results = new Results(this.characterCreator);
+        this.results = new Results();
     }
 
 
@@ -69,7 +69,7 @@ public class Game {
                 } catch (InvalidInputException e) {
                     System.out.println(e.getMessage());
                     System.out.print("Do you want to quit? (Y/N): ");
-                    characterCreator.promptQuitGame();
+                    Prompter.promptQuitGame();
                 }
             }
 
@@ -93,8 +93,8 @@ public class Game {
     private void playGame(){ // Kör spelet
         do{ // anropa playTurn();
             playTurn();
-        } while(! results.isGameOver()); // kör spelet så länge results.isGameOver() inte är sant.
-        System.out.println(results.assignWinner());
+        } while(! isGameOver()); // kör spelet så länge results.isGameOver() inte är sant.
+        System.out.println(results.assignWinner(players));
     }
 
     private void playTurn() {
@@ -109,7 +109,7 @@ public class Game {
         turn.setFirstPlayer(firstPlayer);
         turn.setSecondPlayer(secondPlayer);
         turn.play();
-        System.out.println("Turn "+Turn.getTurnCount()+" has ended");
+        System.out.println("Turn "+ Turn.getTurnCount() +" has ended");
 
         /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
             turnActions(turn, firstPlayer, secondPlayer);
@@ -139,4 +139,9 @@ public class Game {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    public boolean isGameOver(){
+        return !results.alivePlayersCheck(players);
+    }
+    
 }

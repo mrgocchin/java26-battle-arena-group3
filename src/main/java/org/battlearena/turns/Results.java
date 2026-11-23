@@ -2,21 +2,12 @@ package org.battlearena.turns;
 
 import org.battlearena.player.Player;
 import org.battlearena.player.PlayerStatus;
-import org.battlearena.player.CharacterCreator;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Results {
-    private CharacterCreator characterCreator; 
-    private ArrayList<Player> players;
 
-    public Results(CharacterCreator cc) {
-        this.players = new ArrayList<>();
-        this.characterCreator = cc;
-    }
-
-     public boolean alivePlayersCheck() {
+     public boolean alivePlayersCheck(ArrayList<Player> players) {
         boolean arePlayersAlive = true;
         for (Player player : players) {
             if (player.getHp() <= 0) {
@@ -25,17 +16,12 @@ public class Results {
                 //can both player die in the same turn?
                 break;
             }
-
         }
         return arePlayersAlive;
     }
-    public boolean isGameOver(){
-        return !alivePlayersCheck();
-    }
- 
     //this method should only assign winner but for now it also returns messages.
     // can be refactored to 2 different methods.
-    public String assignWinner() {
+    public String assignWinner(ArrayList<Player> players) {
         StringBuilder endGameMessage = new StringBuilder();
         for (Player player : players) {
             if (player.getHp() <= 0) {
@@ -52,7 +38,5 @@ public class Results {
         }
         return endGameMessage.toString();
     }
-
-
 
 }
