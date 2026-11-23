@@ -3,23 +3,24 @@ package org.battlearena.actions.heal;
 import org.battlearena.actions.Actionable;
 import org.battlearena.player.Player;
 
-public class Heal implements Actionable{
-private Player healingPlayer;
-private int healAmount;
+public class Heal implements Actionable {
+    private Player healingPlayer;
+    private int healAmount;
 
     @Override
     public void perform() {
         calculateHealAmount();
         applyHealing();
-        healSummary();
+        IO.println(getActionSummary());
     }
 
+    //to be removed
     @Override
     public String getDescription() {
-        return "The player healed themself";
+        return "nothing to return. remove this method in next refactoring ";
     }
 
-    public Heal (Player healingPlayer){
+    public Heal(Player healingPlayer) {
         this.healingPlayer = healingPlayer;
     }
 
@@ -27,6 +28,7 @@ private int healAmount;
         int healAmount = healingPlayer.getPlayerCharacter().getMaxHp() / 10;
         return healAmount;
     }
+
     public void applyHealing() {
         int currentHp = healingPlayer.getHp();
         int healAmount = calculateHealAmount();
@@ -36,8 +38,10 @@ private int healAmount;
         }
         healingPlayer.setHp(newHp);
     }
-    public String healSummary(){
-        String summaryOfHealing = "The " + healingPlayer.getPlayerCharacter().getClass().getSimpleName() +
+
+    @Override
+    public String getActionSummary() {
+        String summaryOfHealing = "The " + healingPlayer.getPlayerCharacter().getName() +
                 " played by " + healingPlayer.getName() +
                 " has healed for: " + healAmount +
                 "HP, and now stand with: " + healingPlayer.getHp() + "Hp";

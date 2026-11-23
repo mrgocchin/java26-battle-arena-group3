@@ -13,14 +13,26 @@ public class Defend implements Actionable {
 
     private Player opponent;
 
+    //to be removed
+    @Override
+    public String getDescription() {
+        return "nothing to return. remove this method in next refactoring";
+    }
+
     @Override
     public void perform() {
         player.setDefending();
+        IO.println(getActionSummary());
+    }
 
-        System.out.println("You are now defending against the next attack.");
+    @Override
+    public String getActionSummary() {
+        String defendSummary = "The " + player.getPlayerCharacter().getName() +
+                " played by " + player.getName() +
+                " is defending themself from the next attack coming from" + opponent.getPlayerCharacter().getName() +
+                " played by " + opponent.getName();
+        return defendSummary;
     }
-    @Override 
-    public String getDescription(){
-        return "The player defended";
-    }
+
+
 }

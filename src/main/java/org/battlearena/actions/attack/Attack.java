@@ -18,46 +18,46 @@ public class Attack implements Actionable {
     private final Random random = new Random();
     private int damage;
 
+    //to be removed
+    @Override
+    public String getDescription() {
+        return "nothing to return. remove this method in next refactoring";
+    }
+
     @Override
     public void perform() {
         calculateDamage();
         applyDamage();
-        attackSummary();
+        IO.println(getActionSummary());
         opponent.setNotDefending();
     }
-    @Override 
-    public String getDescription(){
-        return "The player attacked";
-    }
-    
-    //The method gives a negative number since damage is a negative effect.
+
     public int calculateDamage() {
         Character playerCharacter = attacker.getPlayerCharacter();
 
         int maxAttack = playerCharacter.getMaxAttackDamage();
         int minAttack = playerCharacter.getMinAttackDamage();
 
-        damage = (- random.nextInt(minAttack, maxAttack + 1));
+        damage = (random.nextInt(minAttack, maxAttack + 1));
 
         return damage;
     }
 
-    //applyDefence integrated in applyDamage.
-    //ApplyDamage has currentHp + damage since damage is negative.
-    //Also make it easy to refactor to generalHpModifier method ( for healing and more).
-    public void applyDamage(){
-       int currentHp = opponent.getHp();
-        if (opponent.isDefending()){
+    public void applyDamage() {
+        int currentHp = opponent.getHp();
+        if (opponent.isDefending()) {
             damage = 0;
         }
-       int newHp = currentHp + damage;
-       if (newHp < opponent.getPlayerCharacter().getMinHp()){
-           newHp = opponent.getPlayerCharacter().getMinHp();
-       }
-       opponent.setHp(newHp);
+        int newHp = currentHp - damage;
+        if (newHp < opponent.getPlayerCharacter().getMinHp()) {
+            newHp = opponent.getPlayerCharacter().getMinHp();
+        }
+        opponent.setHp(newHp);
     }
-    public String attackSummary(){
-        String attackSummary = "The " + attacker.getPlayerCharacter().getClass().getSimpleName() +
+
+    @Override
+    public String getActionSummary() {
+        String attackSummary = "The " + attacker.getPlayerCharacter().getName() +
                 " played by " + attacker.getName() +
                 " inflicted a damage of: " + damage +
                 "Hp against the " + opponent.getPlayerCharacter().getClass().getSimpleName() +
@@ -74,3 +74,4 @@ public class Attack implements Actionable {
         this.damage = damage;
     }
 }
+
