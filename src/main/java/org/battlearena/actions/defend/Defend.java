@@ -29,7 +29,7 @@ public class Defend implements Actionable {
     public String getActionSummary() {
         String defendSummary = "The " + player.getPlayerCharacter().getName() +
                 " played by " + player.getName() +
-                " is defending itself from the next attack coming from" + opponent.getPlayerCharacter().getName() +
+                " is defending themself from the next attack coming from" + opponent.getPlayerCharacter().getName() +
                 " played by " + opponent.getName();
         return defendSummary;
     }
