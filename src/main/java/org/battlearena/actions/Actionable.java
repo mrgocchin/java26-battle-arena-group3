@@ -2,6 +2,6 @@ package org.battlearena.actions;
 
 public interface Actionable {
     void perform();
-    String getDescription();
     String getActionSummary();
+    String getDescription();
 }

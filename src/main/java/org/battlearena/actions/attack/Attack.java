@@ -19,18 +19,23 @@ public class Attack implements Actionable {
     private int damage;
 
     @Override
+    public String getDescription(){
+        return "nothing to return. remove this method in next refactoring";
+    }
+
+    @Override
     public void perform() {
         calculateDamage();
         applyDamage();
         attackSummary();
         opponent.setNotDefending();
     }
-    @Override 
+    @Override
     public String getDescription(){
         return "The player attacked";
+        IO.println(getActionSummary());
     }
-    
-    //The method gives a negative number since damage is a negative effect.
+
     public int calculateDamage() {
         Character playerCharacter = attacker.getPlayerCharacter();
 
@@ -56,7 +61,7 @@ public class Attack implements Actionable {
 
     @Override
     public String getActionSummary() {
-        String attackSummary = "The " + attacker.getPlayerCharacter().getClass().getSimpleName() +
+        String attackSummary = "The " + attacker.getPlayerCharacter().getName() +
                 " played by " + attacker.getName() +
                 " inflicted a damage of: " + damage +
                 "Hp against the " + opponent.getPlayerCharacter().getClass().getSimpleName() +
@@ -73,3 +78,4 @@ public class Attack implements Actionable {
         this.damage = damage;
     }
 }
+
