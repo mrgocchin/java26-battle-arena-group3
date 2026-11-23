@@ -109,7 +109,7 @@ public class Game {
         turn.setFirstPlayer(firstPlayer);
         turn.setSecondPlayer(secondPlayer);
         turn.play();
-        System.out.println("Turn "+ Turn.getTurnCount() +" has ended");
+        System.out.println("Turn " + Turn.getTurnCount() + " has ended");
 
         /*for (int i = 0; i <= turn.getRoundsRemaining(); i++) {
             turnActions(turn, firstPlayer, secondPlayer);
