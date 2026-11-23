@@ -18,8 +18,9 @@ public class Attack implements Actionable {
     private final Random random = new Random();
     private int damage;
 
+    //to be removed
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return "nothing to return. remove this method in next refactoring";
     }
 
@@ -27,13 +28,8 @@ public class Attack implements Actionable {
     public void perform() {
         calculateDamage();
         applyDamage();
-        attackSummary();
-        opponent.setNotDefending();
-    }
-    @Override
-    public String getDescription(){
-        return "The player attacked";
         IO.println(getActionSummary());
+        opponent.setNotDefending();
     }
 
     public int calculateDamage() {

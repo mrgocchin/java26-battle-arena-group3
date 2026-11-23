@@ -15,7 +15,7 @@ public class Defend implements Actionable {
 
     //to be removed
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return "nothing to return. remove this method in next refactoring";
     }
 
@@ -25,8 +25,8 @@ public class Defend implements Actionable {
         IO.println(getActionSummary());
     }
 
-    @Override 
-    public String getActionSummary(){
+    @Override
+    public String getActionSummary() {
         String defendSummary = "The " + player.getPlayerCharacter().getName() +
                 " played by " + player.getName() +
                 " is defending itself from the next attack coming from" + opponent.getPlayerCharacter().getName() +
