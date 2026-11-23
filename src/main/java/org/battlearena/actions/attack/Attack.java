@@ -30,6 +30,7 @@ public class Attack implements Actionable {
         applyDamage();
         IO.println(getActionSummary());
         opponent.setNotDefending();
+        attacker.setHasAttackedThisTurn(true);
     }
 
     public int calculateDamage() {

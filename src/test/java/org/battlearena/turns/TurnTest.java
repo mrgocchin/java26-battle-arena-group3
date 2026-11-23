@@ -56,6 +56,18 @@ class TurnTest {
     }
 
     @Test
+    void selectActionShouldTrowExceptionIfAttackingTwice() {
+        Player player = turn.getFirstPlayer();
+        Player opponent = turn.getSecondPlayer();
+
+        player.setHasAttackedThisTurn(true);
+
+        assertThrows(ExceededActionException.class, () -> {
+            turn.selectAction("attack", player, opponent);
+        });
+    }
+
+    @Test
     void turnActionsThrowsExceptionIfPlayerAlreadyUsedUpTheirActions() {
         Player player = turn.getFirstPlayer();
 
