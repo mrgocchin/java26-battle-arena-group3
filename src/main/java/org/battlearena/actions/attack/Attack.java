@@ -24,6 +24,7 @@ public class Attack implements Actionable {
         applyDamage();
         attackSummary();
         opponent.setNotDefending();
+        attacker.setHasAttackedThisTurn(true);
     }
     @Override 
     public String getDescription(){

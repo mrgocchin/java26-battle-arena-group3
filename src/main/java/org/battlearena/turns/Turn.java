@@ -77,43 +77,42 @@ public class Turn {
     protected void turnActions(Player player, Player opponent) throws ExceededActionException {
         /*
             Scenarios:
-                Round 1: Neither player has attacked yet
-                Round 2: Player might have attacked, so now we need to check on that
+                Round 1: Neither player has attacked yet -- OK!
+                Round 2: Player might have attacked, so now we need to check on that:
+                    a) Player has attacked: Exclude Attack from options -- OK!
+                    b) Player has _not_ attacked: Don't prompt player to select action, just force the attack. -- TODO
          */
         if (! player.hasRemainingActions()) {
             throw new ExceededActionException("Player " + player.getName() + " has already used up their actions this turn");
         }
 
-        if (! player.hasAttackedThisTurn()) {
-            Actionable action = null;
-            while (action == null) {
-                try {
-                    // if player is human
-                    String input = Prompter.promptForAction();
-                    action = selectAction(input, player, opponent);
-                    // else, player is computer. Then we need to randomly pick an action for the computer
-                } catch (InvalidInputException e) {
-                    System.out.println(e.getMessage());
-                    System.out.print("Do you want to quit? (Y/N): ");
-                    Prompter.promptQuitGame();
-                }
+        Actionable action = null;
+        while (action == null) {
+            try {
+                // if player is human
+                String input = Prompter.promptForAction(player.hasAttackedThisTurn());
+                action = selectAction(input, player, opponent);
+                // else, player is computer. Then we need to randomly pick an action for the computer
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Do you want to quit? (Y/N): ");
+                Prompter.promptQuitGame();
             }
-
-            action.perform();
-
-            System.out.println(action.getDescription());
-            addPerformedAction(action);
-            player.increaseActionCount();
-        } else {
-            // Prompt for action (excluding attack)
-            // After action completed, call turn.increaseActionCount()
         }
-        // else force player to attack, they're not getting any other option
+
+        action.perform();
+
+        System.out.println(action.getDescription());
+        addPerformedAction(action);
+        player.increaseActionCount();
     }
 
-    public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
+    public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException, ExceededActionException {
         switch (input.toLowerCase().trim()) {
             case "attack":
+                if (player.hasAttackedThisTurn()) {
+                    throw new ExceededActionException("You have already attacked this turn! Please select a different action.");
+                }
                 return new Attack(player, opponent);
             case "defend":
                 return new Defend(player, opponent);
