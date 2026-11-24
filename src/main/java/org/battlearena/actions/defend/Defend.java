@@ -13,16 +13,9 @@ public class Defend implements Actionable {
 
     private Player opponent;
 
-    //to be removed
-    @Override
-    public String getDescription() {
-        return "nothing to return. remove this method in next refactoring";
-    }
-
     @Override
     public void perform() {
         player.setDefending();
-        IO.println(getActionSummary());
     }
 
     @Override
