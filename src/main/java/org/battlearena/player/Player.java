@@ -106,6 +106,7 @@ public class Player {
                 + (this.getPlayerCharacter().getClass().getSimpleName())+
                 " played by " + this.getName() +
                 " has " + this.getHp() + "HP.";
+
                 //" HP remaining and has the following effects: " +
 
         return playerStatusInfo;

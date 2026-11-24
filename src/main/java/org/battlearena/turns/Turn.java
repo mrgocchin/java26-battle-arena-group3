@@ -9,6 +9,7 @@ import org.battlearena.exceptions.ExceededActionException;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
 import org.battlearena.actions.Actionable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class Turn {
         return roundsRemaining;
     }
 
-    public List<Actionable> getPerformedActions(){
+    public List<Actionable> getPerformedActions() {
         return performedActions;
     }
 
@@ -85,11 +86,11 @@ public class Turn {
                     a) Player has attacked: Exclude Attack from options -- OK!
                     b) Player has _not_ attacked: Don't prompt player to select action, just force the attack. -- TODO
          */
-        if(player.getHp() <= 0){
+        if (player.getHp() <= 0) {
             return;
         }
 
-        if (! player.hasRemainingActions()) {
+        if (!player.hasRemainingActions()) {
             throw new ExceededActionException("Player " + player.getName() + " has already used up their actions this turn");
         }
 
@@ -109,7 +110,7 @@ public class Turn {
 
         action.perform();
 
-        System.out.println(action.getDescription());
+        System.out.println(action.getActionSummary());
         addPerformedAction(action);
         player.increaseActionCount();
     }
