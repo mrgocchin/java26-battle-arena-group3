@@ -55,7 +55,7 @@ class PlayerTest {
                 " played by " +
                 player.getName() +
                 " has " +
-                player.getHp() + "\n";
+                player.getHp() + "HP.";
                 //" HP remaining and has the following effects: "
 
         assertEquals(expectedOutput, player.displayPlayerStatusInfo());
