@@ -11,13 +11,6 @@ public class Heal implements Actionable {
     public void perform() {
         calculateHealAmount();
         applyHealing();
-        IO.println(getActionSummary());
-    }
-
-    //to be removed
-    @Override
-    public String getDescription() {
-        return "nothing to return. remove this method in next refactoring ";
     }
 
     public Heal(Player healingPlayer) {

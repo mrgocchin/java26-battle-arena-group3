@@ -18,17 +18,10 @@ public class Attack implements Actionable {
     private final Random random = new Random();
     private int damage;
 
-    //to be removed
-    @Override
-    public String getDescription() {
-        return "nothing to return. remove this method in next refactoring";
-    }
-
     @Override
     public void perform() {
         calculateDamage();
         applyDamage();
-        IO.println(getActionSummary());
         opponent.setNotDefending();
         attacker.setHasAttackedThisTurn(true);
     }
