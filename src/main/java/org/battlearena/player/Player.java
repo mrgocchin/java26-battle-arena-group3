@@ -60,10 +60,10 @@ public class Player {
     }
 
     public String winnerMessage() {
-        return "Congratulations! " + this.name + " has won the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " survived the battle!";
+        return "Congratulations! " + this.name + " has won the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " survived the battle!\n";
     }
     public String gameOverMessage() {
-        return "Game Over! " + this.name + " has lost the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " did not survive the battle!";
+        return "Game Over! " + this.name + " has lost the game!" + "\nThe " + this.playerCharacter.getClass().getSimpleName() + " did not survive the battle!\n";
     }
 
     public Character getPlayerCharacter(){
