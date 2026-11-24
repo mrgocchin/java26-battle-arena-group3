@@ -71,7 +71,7 @@ public class CharacterCreator {
         return humanPlayer;
     }
 
-    private void promptQuitGame() {
+    public void promptQuitGame() {
         String response = scanner.nextLine();
         if (response.trim().equalsIgnoreCase("Y")) {
             System.exit(0);
