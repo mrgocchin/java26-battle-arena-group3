@@ -108,8 +108,6 @@ public class Game {
             turn.decreaseRounds();
         }*/
     }
-    //this method should only assign winner but for now it also returns messages.
-    // can be refactored to 2 different methods.
     // NOTE: selectAction() is pending removal after refactoring
     public Actionable selectAction(String input, Player player, Player opponent) throws InvalidInputException {
         switch (input.toLowerCase().trim()) {
