@@ -5,21 +5,15 @@ import org.battlearena.actions.attack.Attack;
 import org.battlearena.actions.defend.Defend;
 import org.battlearena.actions.heal.Heal;
 import org.battlearena.actions.specialskill.SpecialSkill;
-import org.battlearena.characters.mage.Mage;
-import org.battlearena.characters.necromancer.Necromancer;
-import org.battlearena.characters.warrior.Warrior;
 import org.battlearena.exceptions.ExceededActionException;
-import org.battlearena.characters.Character;
 import org.battlearena.exceptions.InvalidInputException;
 import org.battlearena.player.Player;
-import org.battlearena.player.PlayerStatus;
 import org.battlearena.turns.Turn;
 import org.battlearena.player.CharacterCreator;
 import org.battlearena.turns.Results;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
 
 
@@ -40,9 +34,6 @@ public class Game {
     public void run() {
         // The following two lines are simple health checks and needs to be removed once we get really started.
         IO.println("Shall we play a game?");
-
-
-
         this.players = characterCreator.getPlayers();
         playGame();
     }
@@ -117,8 +108,6 @@ public class Game {
             turn.decreaseRounds();
         }*/
     }
-
-
     //this method should only assign winner but for now it also returns messages.
     // can be refactored to 2 different methods.
     // NOTE: selectAction() is pending removal after refactoring
@@ -140,8 +129,7 @@ public class Game {
         return players;
     }
 
-    public boolean isGameOver(){
+    private boolean isGameOver(){
         return !results.alivePlayersCheck(players);
-    }
-    
+    }   
 }
