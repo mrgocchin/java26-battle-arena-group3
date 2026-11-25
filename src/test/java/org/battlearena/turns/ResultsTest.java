@@ -18,14 +18,16 @@ class ResultsTest {
     Scanner scanner;
     CharacterCreator characterCreator;
     Results results;
+    Player humanPlayer;
+    Player computerPlayer;
 
     @BeforeEach
     void setUp() {
         this.scanner = new Scanner(System.in);
         this.characterCreator = new CharacterCreator(this.scanner);
         this.results = new Results();
-        Player humanPlayer = new Player("TestNameHuman", new Mage());
-        Player computerPlayer = new Player("TestNameComputer", new Mage());
+        humanPlayer = new Player("TestNameHuman", new Mage());
+        computerPlayer = new Player("TestNameComputer", new Mage());
         characterCreator.addPlayer(humanPlayer);
         characterCreator.addPlayer(computerPlayer);
     }
@@ -36,15 +38,28 @@ class ResultsTest {
 
     @Test
     void alivePlayersCheckShouldReturnFalseWhenAPlayerDies() {
-        characterCreator.getPlayers().getFirst().setHp(0);
+        humanPlayer.setHp(0);
         results.alivePlayersCheck(characterCreator.getPlayers());
         assertFalse(results.alivePlayersCheck(characterCreator.getPlayers()));
     }
 
     @Test
     void assignWinnerCheckShouldReturnRightEnum() {
-        characterCreator.getPlayers().getFirst().setHp(0);
+        humanPlayer.setHp(0);
         results.assignWinner(characterCreator.getPlayers());
         assertEquals(PlayerStatus.LOSER, characterCreator.getPlayers().getFirst().getPlayerStatus());
+    }
+
+    @Test
+    void assignWinnerCheckShouldGive2Losers() {
+        boolean bothPlayerLoser = false;
+        humanPlayer.setHp(0);
+        computerPlayer.setHp(0);
+        //System.out.println(results.assignWinner(characterCreator.getPlayers()));
+        if (humanPlayer.getPlayerStatus() == PlayerStatus.LOSER && computerPlayer.getPlayerStatus() == PlayerStatus.LOSER){
+            bothPlayerLoser = true;
+        }
+
+        assertTrue(bothPlayerLoser);
     }
 }
