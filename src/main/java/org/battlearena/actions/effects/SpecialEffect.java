@@ -5,10 +5,12 @@ public enum SpecialEffect {
     STABILITY(null),
     WARD(null),
 
+    /** Boosters */
+    EXTRA_ATTACK_POWER(null), // from ADRENALINE
+
     /** Offensive Effects */
     KNOCKDOWN(STABILITY), // from SHIELD_BASH
-    CURSED(WARD), // from CURSE
-    EXTRA_ATTACK_POWER(null); // from ADRENALINE
+    CURSED(WARD); // from CURSE
 
     private final SpecialEffect counterEffect;
 
