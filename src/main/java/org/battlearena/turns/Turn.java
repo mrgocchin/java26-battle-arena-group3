@@ -84,7 +84,7 @@ public class Turn {
                 Round 1: Neither player has attacked yet -- OK!
                 Round 2: Player might have attacked, so now we need to check on that:
                     a) Player has attacked: Exclude Attack from options -- OK!
-                    b) Player has _not_ attacked: Don't prompt player to select action, just force the attack. -- TODO
+                    b) Player has _not_ attacked: Don't prompt player to select action, just force the attack.
          */
         if (player.getHp() <= 0) {
             return;
@@ -96,6 +96,10 @@ public class Turn {
 
         Actionable action = null;
         while (action == null) {
+            if(roundsRemaining == 1 && !player.hasAttackedThisTurn()){
+                System.out.println("Player " + player.getName() + " has not yet attacked in this turn, thus this is the only available action now.");
+                action = new Attack(player, opponent);
+            }
             try {
                 // if player is human
                 String input = Prompter.promptForAction(player.hasAttackedThisTurn());
@@ -129,7 +133,7 @@ public class Turn {
             case "special":
                 return new SpecialSkill();
             default:
-                throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend or Special");
+                throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend, Heal or Special");
         }
     }
 }
