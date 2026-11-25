@@ -15,7 +15,8 @@ import java.util.List;
 
 public class Turn {
     private static int turnCount = 0;
-    private int roundsRemaining = 2;
+    //private int roundsRemaining = 2;
+    private TurnType currentRound;
     private Player firstPlayer;
     private Player secondPlayer;
 
@@ -24,6 +25,7 @@ public class Turn {
     public Turn() {
         this.performedActions = new ArrayList<>();
         turnCount++;
+        this.currentRound = TurnType.FIRST_ROUND;
     }
 
     public static int getTurnCount() {
@@ -46,9 +48,10 @@ public class Turn {
         return secondPlayer;
     }
 
-    public int getRoundsRemaining() {
+    /*public int getRoundsRemaining() {
         return roundsRemaining;
-    }
+    }*/
+
 
     public List<Actionable> getPerformedActions() {
         return performedActions;
@@ -58,15 +61,23 @@ public class Turn {
         performedActions.add(action);
     }
 
-    public void decreaseRounds() {
+    /*public void decreaseRounds() {
         if (roundsRemaining == 0) {
             return;
         }
         roundsRemaining--;
-    }
+    }*/
+   public void decreaseRounds(){
+        if(currentRound == TurnType.FIRST_ROUND){
+            currentRound = TurnType.LAST_ROUND;
+        }else if(currentRound == TurnType.LAST_ROUND){
+            currentRound = TurnType.OUT_OF_ROUNDS;
+        }
+   }
 
     public void play() {
-        for (int i = 0; i <= getRoundsRemaining(); i++) {
+        //for (int i = 0; i <= getRoundsRemaining(); i++) {
+        while(!currentRound.isOutOfRounds()){
             try {
                 turnActions(firstPlayer, secondPlayer);
                 turnActions(secondPlayer, firstPlayer);
@@ -96,7 +107,8 @@ public class Turn {
 
         Actionable action = null;
         while (action == null) {
-            if(roundsRemaining == 1 && !player.hasAttackedThisTurn()){
+            //if(roundsRemaining == 1 && !player.hasAttackedThisTurn()){
+            if(currentRound == TurnType.LAST_ROUND && !player.hasAttackedThisTurn()){
                 System.out.println("Player " + player.getName() + " has not yet attacked in this turn, thus this is the only available action now.");
                 action = new Attack(player, opponent);
             }
