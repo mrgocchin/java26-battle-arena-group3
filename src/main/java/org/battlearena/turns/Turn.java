@@ -102,8 +102,12 @@ public class Turn {
                 action = new Attack(player, opponent);
             }
             try {
-                // if player is human
-                String input = Prompter.promptForAction(player.hasAttackedThisTurn());
+                String input;
+                if (player.isHumanPlayer()) {
+                    input = Prompter.promptForAction(player.hasAttackedThisTurn());
+                } else {
+                    input= randomiseAction(player.hasAttackedThisTurn());
+                }
                 action = selectAction(input, player, opponent);
                 // else, player is computer. Then we need to randomly pick an action for the computer
             } catch (InvalidInputException e) {
@@ -138,13 +142,15 @@ public class Turn {
         }
     }
 
-    public String randomiseAction(Player player, Player opponent){
+    public String randomiseAction(boolean excludeAttack){
         List<String> actions = new ArrayList<>();
-        if(!player.hasAttackedThisTurn()) {
+        if(!excludeAttack) {
             actions.add("attack");
         }
         actions.add("heal");
         actions.add("defend");
+        actions.add("special");
+
 
         Collections.shuffle(actions);
 
