@@ -11,6 +11,7 @@ import org.battlearena.player.Player;
 import org.battlearena.actions.Actionable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Turn {
@@ -135,5 +136,18 @@ public class Turn {
             default:
                 throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend, Heal or Special");
         }
+    }
+
+    public String randomiseAction(Player player, Player opponent){
+        List<String> actions = new ArrayList<>();
+        if(!player.hasAttackedThisTurn()) {
+            actions.add("attack");
+        }
+        actions.add("heal");
+        actions.add("defend");
+
+        Collections.shuffle(actions);
+
+        return actions.getFirst();
     }
 }

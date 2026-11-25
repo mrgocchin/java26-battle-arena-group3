@@ -80,4 +80,13 @@ class TurnTest {
            turn.turnActions(player, turn.getSecondPlayer());
         });
     }
+
+    @Test
+    void randomiseActionShouldReturnNotAttackIfPlayerHasAttackInFirstRound(){
+        turn.getFirstPlayer().setHasAttackedThisTurn(true);
+        String notExpectedAction = "attack";
+        String randomisedAction = turn.randomiseAction(turn.getFirstPlayer(),turn.getSecondPlayer());
+        System.out.println(randomisedAction);
+        assertNotSame(notExpectedAction, randomisedAction);
+    }
 }
