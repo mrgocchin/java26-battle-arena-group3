@@ -9,12 +9,6 @@ public class SpecialSkill implements Actionable {
 
     }
 
-    //to be removed
-    @Override
-    public String getDescription() {
-        return "nothing to return. remove this method in next refactoring ";
-    }
-
     @Override
     public String getActionSummary() {
         String summaryOfSpecialSkill = "Special skills not available yet! stay tuned!";
