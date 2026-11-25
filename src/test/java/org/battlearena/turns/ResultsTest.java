@@ -52,7 +52,7 @@ class ResultsTest {
 
     @Test
     void assignWinnerCheckShouldGive2Losers() {
-        Boolean bothPlayerLoser = false;
+        boolean bothPlayerLoser = false;
         humanPlayer.setHp(0);
         computerPlayer.setHp(0);
         //System.out.println(results.assignWinner(characterCreator.getPlayers()));
