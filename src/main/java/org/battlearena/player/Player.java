@@ -1,6 +1,6 @@
 package org.battlearena.player;
 
-import org.battlearena.actions.Effect;
+import org.battlearena.actions.effects.SpecialEffect;
 import org.battlearena.characters.Character;
 import org.battlearena.exceptions.ExceededActionException;
 
@@ -19,7 +19,7 @@ public class Player {
     private int actionCount = 0;
     //playerStatus enum instead of isAlive, so only one status at the time is possible.
 
-    private Map<String, Effect> effects = new HashMap<>();
+    private Map<String, SpecialEffect> effects = new HashMap<>();
 
     public Player(String name, Character playerCharacter) {
         this.name = name;
@@ -99,6 +99,10 @@ public class Player {
 
     public int getActionCount() {
         return actionCount;
+    }
+
+    public Map<String, SpecialEffect> getEffects() {
+        return this.effects;
     }
 
     public String displayPlayerStatusInfo() {
