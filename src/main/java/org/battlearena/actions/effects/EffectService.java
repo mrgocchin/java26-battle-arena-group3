@@ -12,6 +12,17 @@ public class EffectService {
         return player.getEffects().containsKey(effect.name());
     }
 
+    public String applyEffect(Player target, SpecialEffect effect) {
+        // TODO
+        //   - check if target has a counter for the incoming effect
+        //          use getCounterEffect on effect
+        //          use hasEffect(counterEffect) from this service
+        //   - if they do, the effect fizzles (return string with message)
+        //   - if they don't, add the effect (return string with confirmation)
+
+        return "This should return a message on whether effect was applied or not.";
+    }
+
     public boolean playerIsCursed(Player player) {
         return hasEffect(player, SpecialEffect.CURSED);
     }
