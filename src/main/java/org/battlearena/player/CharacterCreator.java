@@ -1,21 +1,23 @@
 package org.battlearena.player;
+
+import org.battlearena.Prompter;
 import org.battlearena.characters.Character;
 import org.battlearena.characters.mage.Mage;
 import org.battlearena.characters.necromancer.Necromancer;
 import org.battlearena.characters.warrior.Warrior;
 
-import java.util.Scanner;
-import java.util.Random;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class CharacterCreator {
 
     private Scanner scanner;
     private Random random;
-    private ArrayList <Player> players;
-    private ArrayList <Character> availableCharacters;
+    private ArrayList<Player> players;
+    private ArrayList<Character> availableCharacters;
 
-    public CharacterCreator(Scanner scanner){
+    public CharacterCreator(Scanner scanner) {
         this.scanner = scanner;
         this.random = new Random();
         this.players = new ArrayList<>();
@@ -44,7 +46,7 @@ public class CharacterCreator {
         }
     }
 
-    private Player getHumanPlayer(){
+    private Player getHumanPlayer() {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
         Character selectedCharacter = null;
@@ -63,27 +65,19 @@ public class CharacterCreator {
             }
             if (selectedCharacter == null) {
                 System.out.println("You have to type in a valid character, do you want to quit? (Y/N)");
-                promptQuitGame();
+                Prompter.promptQuitGame();
             }
         }
         Player humanPlayer = new Player(name, selectedCharacter);
-        humanPlayer.setIsHuman();   
+        humanPlayer.setIsHuman();
         return humanPlayer;
     }
 
-    public void promptQuitGame() {
-        String response = scanner.nextLine();
-        if (response.trim().equalsIgnoreCase("Y")) {
-            System.exit(0);
-        }
-    }
-
-    public ArrayList<Player> getPlayers(){
-        if(players.isEmpty()){
+    public ArrayList<Player> getPlayers() {
+        if (players.isEmpty()) {
             addPlayer(getHumanPlayer());
             addPlayer(getComputerPlayer());
         }
         return players;
     }
-
 }
