@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 public class GameServer {
     public static void main(String[] args) {
@@ -16,17 +17,28 @@ public class GameServer {
             while (true) {
                 try (Socket client = server.accept()) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                    String matchHistory = in.readLine();
-                    if (matchHistory == null || matchHistory.isBlank()) {
+                    PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                    System.out.println("Client connected");
+
+                    String lastMatchSummary = in.readLine();
+                    if (lastMatchSummary == null || lastMatchSummary.isBlank()) {
                         System.out.println("The transmission was empty or the connection was closed");
                         continue;
                     }
                     FileHandler fileHandler = new FileHandler();
-                    boolean fileHandled = (fileHandler.writeToFile(matchHistory));
-                    if (fileHandled == true || fileHandled == false) {
+
+                    boolean fileHandled = (fileHandler.writeToFile(lastMatchSummary));
+                    if (fileHandled) {
                         System.out.println("Written to file");
+                        List<String> completemMatchHistory =  fileHandler.getFileContents();
+                       // if (completemMatchHistory == null|| completemMatchHistory.isEmpty()){
+
+                        //}
+                            out.println(completemMatchHistory);
+                    } else {
+                        System.out.println("Could not write to file");
+                        out.println("The file could not be saved");
                     }
-                    System.out.println("Could not write to file");
 
                 } catch (IOException e) {
                     System.out.println("Client error" + e.getMessage());
