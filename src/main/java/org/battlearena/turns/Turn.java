@@ -11,6 +11,7 @@ import org.battlearena.player.Player;
 import org.battlearena.actions.Actionable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Turn {
@@ -101,8 +102,12 @@ public class Turn {
                 action = new Attack(player, opponent);
             }
             try {
-                // if player is human
-                String input = Prompter.promptForAction(player.hasAttackedThisTurn());
+                String input;
+                if (player.isHumanPlayer()) {
+                    input = Prompter.promptForAction(player.hasAttackedThisTurn());
+                } else {
+                    input= randomiseAction(player.hasAttackedThisTurn());
+                }
                 action = selectAction(input, player, opponent);
                 // else, player is computer. Then we need to randomly pick an action for the computer
             } catch (InvalidInputException e) {
@@ -135,5 +140,20 @@ public class Turn {
             default:
                 throw new InvalidInputException("Sorry, we don't have such an action. Please type either of: Attack, Defend, Heal or Special");
         }
+    }
+
+    public String randomiseAction(boolean excludeAttack){
+        List<String> actions = new ArrayList<>();
+        if(!excludeAttack) {
+            actions.add("attack");
+        }
+        actions.add("heal");
+        actions.add("defend");
+        actions.add("special");
+
+
+        Collections.shuffle(actions);
+
+        return actions.getFirst();
     }
 }

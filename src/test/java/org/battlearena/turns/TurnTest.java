@@ -10,6 +10,9 @@ import org.battlearena.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TurnTest {
@@ -80,4 +83,26 @@ class TurnTest {
            turn.turnActions(player, turn.getSecondPlayer());
         });
     }
+
+    @Test
+    void randomiseActionShouldNotReturnAttackIfHasAttackedThisTurnIsTrue(){
+        turn.getFirstPlayer().setHasAttackedThisTurn(true);
+        String notExpectedAction = "attack";
+        String randomisedAction = turn.randomiseAction(turn.getFirstPlayer().hasAttackedThisTurn());
+        System.out.println(randomisedAction);
+        assertNotSame(notExpectedAction, randomisedAction);
+    }
+
+    @Test
+    void randomiseActionShouldReturnAttackIfHasAttackedThisTurnIsFalse(){
+        turn.getFirstPlayer().setHasAttackedThisTurn(false);
+        Set<String> expected = Set.of("attack", "defend", "heal", "special");
+        Set<String> givenRandomly = new HashSet<>();
+        for (int i = 0; i <= 100; i++){
+            givenRandomly.add(turn.randomiseAction(turn.getFirstPlayer().hasAttackedThisTurn()));
+        }
+        assertEquals(expected, givenRandomly);
+    }
+
+
 }
