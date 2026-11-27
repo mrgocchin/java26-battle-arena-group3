@@ -94,7 +94,7 @@ class TurnTest {
     }
 
     @Test
-    void randomiseActionShouldReturnAttackIfHasAttackedThisTurnIsFalse(){
+    void randomiseActionShouldReturnAllActionsIfHasAttackedThisTurnIsFalse(){
         turn.getFirstPlayer().setHasAttackedThisTurn(false);
         Set<String> expected = Set.of("attack", "defend", "heal", "special");
         Set<String> givenRandomly = new HashSet<>();
