@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class FileHandler {
     private static final String PATH = "matchhistory.txt";
@@ -32,5 +33,13 @@ public class FileHandler {
         }
 
         return true;
+    }
+
+    public List<String> getFileContents() {
+        try {
+            return Files.readAllLines(getPath());
+        } catch (IOException e) {
+            return null;
+        }
     }
 }
