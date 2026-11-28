@@ -112,7 +112,7 @@ public class Turn {
             if(currentRound == TurnType.LAST_ROUND && !player.hasAttackedThisTurn()){
                 System.out.println("Player " + player.getName() + " has not yet attacked in this turn, thus this is the only available action now.");
                 action = new Attack(player, opponent);
-            }
+            } //add an else here
             try {
                 String input;
                 if (player.isHumanPlayer()) {
