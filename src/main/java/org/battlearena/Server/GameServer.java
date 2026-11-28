@@ -30,11 +30,11 @@ public class GameServer {
                     boolean fileHandled = (fileHandler.writeToFile(lastMatchSummary));
                     if (fileHandled) {
                         System.out.println("Written to file");
-                        List<String> completemMatchHistory =  fileHandler.getFileContents();
-                       // if (completemMatchHistory == null|| completemMatchHistory.isEmpty()){
+                        List<String> completemMatchHistory = fileHandler.getFileContents();
+                        // if (completemMatchHistory == null|| completemMatchHistory.isEmpty()){
 
                         //}
-                            out.println(completemMatchHistory);
+                        out.println(completemMatchHistory);
                     } else {
                         System.out.println("Could not write to file");
                         out.println("The file could not be saved");
